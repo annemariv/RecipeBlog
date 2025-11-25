@@ -1,0 +1,24 @@
+swagger: '2.0'
+info:
+    title: RecipeBlog
+    version: 1.0.0
+    description: This is a blog for recipes
+paths:
+    /recipes:
+        get:
+            tags:
+                - recipes
+            responses:
+                '200':
+                    description: Returns a list of recipes
+                    schema:
+                        type: array
+                        items:
+                            type: string
+                    examples:
+                        application/json:
+                            - recipe1
+                            - recipe2
+                            - recipe3
+            summary: Get all the recipes in API
+            description: Returns all recipes that are registered in API

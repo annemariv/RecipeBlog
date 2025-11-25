@@ -8,8 +8,12 @@ const app = express();
 const swaggerUI = require('swagger-ui-express');
 const yamljs = require('yamljs');
 
-//const swaggerDocument = yamljs.load('./docs/swagger.json');
-const swaggerDocument = require('./docs/swagger.json');
+const swaggerDocument = yamljs.load('./docs/swagger.yaml');
+//const swaggerDocument = require('./docs/swagger.json');
+
+app.get('/recipes', (req, res) => {
+    res.send(["recipe1", "recipe2", "recipe3"])
+})
 
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 

@@ -20,11 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         Image: {
             type: DataTypes.BLOB,
             allowNull: true,
-        },
-        Create_time: {
-            type: DataTypes.DATE,
-            allowNull: false,
-        },
+        }
     }
     )
     console.log(Recipe === sequelize.models.Recipe)

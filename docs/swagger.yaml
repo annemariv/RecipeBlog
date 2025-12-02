@@ -22,3 +22,38 @@ paths:
                             - recipe3
             summary: Get all the recipes in API
             description: Returns all recipes that are registered in API
+    '/recipes/{RecipeID}':
+        get:
+            tags:
+                - Recipes
+            responses:
+                '200':
+                    description: Returns all details of the given recipe.
+                    schema:
+                        type: array
+                        items:
+                            type: string
+                    examples:
+                        application/json:
+                            RecipeID: 5fa725fd-cec3-11f0-b43f-901b0eec5991
+                            Title: TestRecipe
+                            Content: For testing
+                            createdAt: '2025-12-01T16:37:08.000Z'
+                            updatedAt: '2025-12-01T16:37:08.000Z'
+                '404':
+                    description: Returns error when recipe not found.
+                    schema:
+                        $ref: '#/definitions/Error'
+            operationId: RecipeID
+            summary: Get full detail of a recipe
+            description: Will return all details of a given recipe based on RecipeID given.
+definitions:
+    Error:
+        title: Root Type for Error
+        description: ''
+        type: object
+        properties:
+            error:
+                type: string
+        example:
+            error: Error message

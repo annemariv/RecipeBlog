@@ -15,11 +15,7 @@ paths:
                         type: array
                         items:
                             type: string
-                    examples:
-                        application/json:
-                            - recipe1
-                            - recipe2
-                            - recipe3
+                    examples: {}
             summary: Get all the recipes in API
             description: Returns all recipes that are registered in API
         post:
@@ -48,6 +44,13 @@ paths:
         get:
             tags:
                 - recipes
+            parameters:
+                -
+                    name: RecipeID
+                    description: ID of <recipe>
+                    in: path
+                    required: true
+                    type: string
             responses:
                 '200':
                     description: Returns all details of the given recipe.
@@ -69,6 +72,14 @@ paths:
             operationId: RecipeID
             summary: Get full detail of a recipe
             description: Will return all details of a given recipe based on RecipeID given.
+        parameters:
+            -
+                name: RecipeID
+                description: |
+                    ID of recipe
+                in: path
+                required: true
+                type: string
 definitions:
     Error:
         title: Root Type for Error

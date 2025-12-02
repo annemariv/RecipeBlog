@@ -23,6 +23,8 @@ paths:
             summary: Get all the recipes in API
             description: Returns all recipes that are registered in API
         post:
+            tags:
+                - recipes
             parameters:
                 -
                     name: body
@@ -45,7 +47,7 @@ paths:
     '/recipes/{RecipeID}':
         get:
             tags:
-                - Recipes
+                - recipes
             responses:
                 '200':
                     description: Returns all details of the given recipe.
@@ -90,7 +92,7 @@ definitions:
             Content:
                 type: string
             Image:
-                type: file
+                type: string
         example:
             Title: NewRecipeTitle
             Content: NewRecipeContent

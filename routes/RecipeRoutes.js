@@ -4,8 +4,9 @@ const RecipesController = require("../controllers/RecipesController");
 //all modules are added here
 module.exports = (app) => {
     app.route("/recipes")
-    .get(RecipesController.getAll);
+        .get(RecipesController.getAll)
+        .post(RecipesController.create)
 
     app.route("/recipes/:RecipeID")
-    .get(RecipesController.getByID);
+        .get(RecipesController.getByID)
 }

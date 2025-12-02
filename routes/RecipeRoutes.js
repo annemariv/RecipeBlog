@@ -5,4 +5,7 @@ const RecipesController = require("../controllers/RecipesController");
 module.exports = (app) => {
     app.route("/recipes")
     .get(RecipesController.getAll);
+
+    app.route("/recipes/:RecipeID")
+    .get(RecipesController.getByID);
 }

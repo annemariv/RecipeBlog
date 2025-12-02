@@ -18,6 +18,22 @@ async (req, res) => {
     return res.status(200).send(recipe);
 }
 
+exports.create = async (req, res) => {
+    if (!req.body.Title || !req.body.Content) {
+        return res.status(400).send({error: 'Title and content are required.'});
+    }
+
+    const newRecipe = {
+        Title: req.body.Title,
+        Content: req.body.Content,
+        Image: req.body.Image || null,
+    }
+
+    const createdRecipe = await db.recipes.create(newRecipe);
+    return res.location(`${Utilities.getBaseURL(req)}/recipes/${createdRecipe.RecipeID}`).sendStatus(201);
+}
+
+
 const getRecipe = 
 async (req, res) => {
     const idNumber = req.params.RecipeID;

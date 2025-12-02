@@ -22,6 +22,26 @@ paths:
                             - recipe3
             summary: Get all the recipes in API
             description: Returns all recipes that are registered in API
+        post:
+            parameters:
+                -
+                    name: body
+                    description: The recipe to be created.
+                    schema:
+                        $ref: '#/definitions/New-Recipe'
+                    in: body
+                    required: true
+            responses:
+                '201':
+                    description: Send 201 when recipe is successfully added to the database.
+                    schema:
+                        $ref: '#/definitions/New-Recipe'
+                '400':
+                    description: Missing some parameter. Title and content are required.
+                    schema:
+                        $ref: '#/definitions/Error'
+            summary: Create a new recipe into the app
+            description: Creates a new recipe instance with its required details for further usage.
     '/recipes/{RecipeID}':
         get:
             tags:
@@ -57,3 +77,21 @@ definitions:
                 type: string
         example:
             error: Error message
+    New-Recipe:
+        title: Root Type for New-Recipe
+        description: ''
+        required:
+            - Content
+            - Title
+        type: object
+        properties:
+            Title:
+                type: string
+            Content:
+                type: string
+            Image:
+                type: file
+        example:
+            Title: NewRecipeTitle
+            Content: NewRecipeContent
+            Image: NewRecipeImage

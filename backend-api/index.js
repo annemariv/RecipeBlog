@@ -21,6 +21,7 @@ app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use(express.json());
 
 require('./routes/RecipeRoutes.js')(app);
+require('./routes/ChallengesRoutes.js')(app);
 
 
 app.listen(port, async () => {

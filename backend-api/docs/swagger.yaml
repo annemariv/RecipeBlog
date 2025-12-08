@@ -74,7 +74,7 @@ paths:
             description: Will return all details of a given recipe based on RecipeID given.
         put:
             tags:
-                - Recipes
+                - recipes
             parameters:
                 -
                     name: body
@@ -142,6 +142,38 @@ paths:
                 in: path
                 required: true
                 type: string
+    '/challenges/{ChallengeID}':
+        get:
+            operationId: ChallengeID
+            summary: Get full detail of a challenge
+        parameters:
+            -
+                name: ChallengeID
+                description: ID of challenge
+                in: path
+                required: true
+                type: string
+    /users:
+        get:
+            tags:
+                - users
+            responses:
+                '200':
+                    description: Returns a list of users
+            summary: Get all the users in API
+            description: Returns all users that are registered in API
+    /challenges:
+        get:
+            tags:
+                - challenges
+            responses:
+                '200':
+                    description: Returns a list of challenges
+                    schema:
+                        type: array
+                        items:
+                            type: string
+            summary: Get all the challenges in API
 definitions:
     Error:
         title: Root Type for Error

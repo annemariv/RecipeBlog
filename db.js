@@ -27,7 +27,7 @@ db.sequelize = sequelize;
 db.recipes = require('./models/Recipe.js')(sequelize, DataTypes);
 
 const sync = (async () => {
-    await sequelize.sync({alter: true});
+    await sequelize.sync({});
     console.log('DB sync has been completed')
 })
 

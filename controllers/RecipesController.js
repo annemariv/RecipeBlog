@@ -2,6 +2,7 @@ const {db} = require('../db');
 const Utilities = require('./Utilities');
 const UUID = require('uuid');
 
+
 exports.getAll = 
 async (req, res) => {
     const recipes = await db.recipes.findAll();
@@ -31,6 +32,14 @@ exports.create = async (req, res) => {
 
     const createdRecipe = await db.recipes.create(newRecipe);
     return res.location(`${Utilities.getBaseURL(req)}/recipes/${createdRecipe.RecipeID}`).sendStatus(201);
+}
+
+exports.deleteByID = 
+async (req, res) => {
+const recipeToBeDeleted = await getRecipe(req, res);
+if (!recipeToBeDeleted) {return;}
+await recipeToBeDeleted.destroy();
+res.status(204).send({error:"No Content"});
 }
 
 

@@ -72,6 +72,29 @@ paths:
             operationId: RecipeID
             summary: Get full detail of a recipe
             description: Will return all details of a given recipe based on RecipeID given.
+        delete:
+            tags:
+                - recipes
+            responses:
+                '204':
+                    description: Returns "No Content" when removal of recipes is successful
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json:
+                            -
+                                error: No countent
+                '404':
+                    description: 'Returns error, when recipe with specified ID does not exist'
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json:
+                            -
+                                error: Not found
+            summary: Delete a recipe from the app
+            description: |
+                Deletes an entry from the app
         parameters:
             -
                 name: RecipeID
@@ -108,3 +131,12 @@ definitions:
             Title: NewRecipeTitle
             Content: NewRecipeContent
             Image: NewRecipeImage
+    Delete-Recipe:
+        title: Root Type for Delete-Recipe
+        description: ''
+        type: object
+        properties:
+            RecipeID:
+                type: string
+        example:
+            RecipeID: a17e59b1-9391-460a-97de-591a9cb9066d

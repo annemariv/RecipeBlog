@@ -25,6 +25,7 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.recipes = require('./models/Recipe.js')(sequelize, DataTypes);
+db.users = require('./models/User.js')(sequelize, DataTypes);
 
 const sync = (async () => {
     await sequelize.sync({});

@@ -26,6 +26,15 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.recipes = require('./models/Recipe.js')(sequelize, DataTypes);
 db.users = require('./models/User.js')(sequelize, DataTypes);
+db.savedRecipes = require('./models/SavedRecipe.js')(sequelize, db.recipes, db.users);
+
+// define relations between models:
+    //savedRecipe - users
+db.savedRecipes.hasMany(db.users);
+db.users.hasMany(db.savedRecipes);
+    // savedRecipe - recipes
+db.recipes.hasMany(db.savedRecipes);
+db.savedRecipes.belongsTo(db.recipes);
 
 const sync = (async () => {
     await sequelize.sync({});

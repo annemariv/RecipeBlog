@@ -1,19 +1,39 @@
-const {db} = require('../db');
-const {gimmePassword, letMeIn} = require('./Utilities');
+const { db } = require('../db');
+const { gimmePassword } = require('./Utilities');
 
-exports.getAll = 
-async (req, res) => {
+exports.getAll = async (req, res) => {
     const users = await db.users.findAll();
-    console.log("getAll:"+ users)
-    res
-    .status(200)
-    .send(users.map(({UserID,UserType}) => {return {UserID,UserType}}));
-}
+    res.status(200).send(users);
+};
 
-exports.hashPassword = async (password) => {
-    return await gimmePassword(password);
-}
+exports.create = async (req, res) => {
+    const missing = [];
 
-exports.verifyPassword = async (plainPassword, hashedPassword) => {
-    return await letMeIn(plainPassword, hashedPassword);
-}
+    if (!req.body.UserName) missing.push("UserName");
+    if (!req.body.EmailAddress) missing.push("EmailAddress");
+    if (!req.body.Password) missing.push("Password");
+
+    if (missing.length > 0) {
+        return res.status(400).send({
+            error: `Missing required fields: ${missing.join(", ")}`
+        });
+    }
+
+    try {
+        const newUser = {
+            UserName: req.body.UserName,
+            EmailAddress: req.body.EmailAddress,
+            Password: await gimmePassword(req.body.Password),
+            PhoneNumber2FA: req.body.PhoneNumber2FA || null,
+            IsAdmin: req.body.IsAdmin === true || false
+        };
+
+        const resultingUser = await db.users.create(newUser);
+
+        return res
+            .location(`/users/${resultingUser.UserID}`)
+            .sendStatus(201);
+    } catch (err) {
+        return res.status(500).send({ error: err.message });
+    }
+};

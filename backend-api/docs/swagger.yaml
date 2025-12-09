@@ -144,8 +144,32 @@ paths:
                 type: string
     '/challenges/{ChallengeID}':
         get:
+            tags:
+                - challenges
+            responses:
+                '200':
+                    description: Returns all details of a given challenge
+                    schema:
+                        type: array
+                        items:
+                            type: string
+                    examples:
+                        application/json: |-
+                            {
+                                "ChalleneID": "43ad65a0-d4f7-11h0-b43r-901b0eec5891",
+                                "Title": "TestTitle",
+                                "Descrpition": "TestDescription",
+                                "Is_Active" : "Yes"
+                                "createdAt": "2025-12-01T16:37:08.000Z",
+                                "updatedAt": "2025-12-01T16:37:08.000Z"
+                            }
+                '404':
+                    description: Returns error when challenge not found
+                    schema:
+                        $ref: '#/definitions/Error'
             operationId: ChallengeID
             summary: Get full detail of a challenge
+            description: Will return all details of a given challenge based on ChallengeID given
         parameters:
             -
                 name: ChallengeID
@@ -166,6 +190,32 @@ paths:
                             type: string
             summary: Get all the users in API
             description: Returns all users that are registered in API
+        post:
+            tags:
+                - users
+            parameters:
+                -
+                    name: body
+                    schema:
+                        $ref: '#/definitions/New-User'
+                    in: body
+                    required: true
+            responses:
+                '201':
+                    description: Send 201 when User is successfully added to the DB
+                    schema:
+                        $ref: '#/definitions/New-User'
+                    examples: {}
+                '400':
+                    description: 'Send 400, when the request body is missing some parameter.'
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json:
+                            -
+                                error: Missin some parameter.
+            summary: Add a new User to the app
+            description: Enables user signup functions and further usage.
     /challenges:
         get:
             tags:
@@ -178,6 +228,28 @@ paths:
                         items:
                             type: string
             summary: Get all the challenges in API
+        post:
+            tags:
+                - challenges
+            parameters:
+                -
+                    name: body
+                    description: The challenge to be created
+                    schema:
+                        $ref: '#/definitions/New-Challenge'
+                    in: body
+                    required: true
+            responses:
+                '201':
+                    description: Send 201 when challenge is successfully added to the database
+                    schema:
+                        $ref: '#/definitions/New-Challenge'
+                '400':
+                    description: Missing some parameter. Title and content are required.
+                    schema:
+                        $ref: '#/definitions/Error'
+            summary: Create a new challenge into the app
+            description: Creates a new challenge with its required details for further usage.
 definitions:
     Error:
         title: Root Type for Error
@@ -215,3 +287,37 @@ definitions:
                 type: string
         example:
             RecipeID: a17e59b1-9391-460a-97de-591a9cb9066d
+    New-User:
+        description: 'New user data, PhoneNumber2FA is optional'
+        type: object
+        example:
+            EmailAddress: a@b.com
+            Password: abc123
+            UserName: tester
+            PhoneNumber2FA: '1234567'
+    New-Challenge:
+        title: Root Type for New-Challenge
+        description: ''
+        type: object
+        properties:
+            ChallengeID:
+                type: string
+            Title:
+                type: string
+            Descrpition:
+                type: string
+            Is_Active:
+                type: string
+            createdAt:
+                format: date-time
+                type: string
+            updatedAt:
+                format: date-time
+                type: string
+        example:
+            ChallengeID: 43ad65a0-d4f7-11h0-b43r-901b0eec5891
+            Title: TestTitle
+            Descrpition: TestDescription
+            Is_Active: 'True'
+            createdAt: '2025-12-01T16:37:08.000Z'
+            updatedAt: '2025-12-01T16:37:08.000Z'

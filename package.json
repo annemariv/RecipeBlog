@@ -1,16 +1,17 @@
 {
-  "dependencies": {
-    "bcrypt": "^6.0.0"
-  },
   "name": "recipeblog",
   "version": "1.0.0",
   "description": "---\r # How to run this app",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"cd backend-api && nodemon ."
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^9.2.1"
+  },
+  "devDependencies": {}
 }

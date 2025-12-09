@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
     const Recipe = sequelize.define(
         'SavedRecipe', {
-            ListID: {
+            SavedRecipeID: {
                 type: DataTypes.UUID,
                 primaryKey: true,
                 defaultValue: DataTypes.UUIDV4,

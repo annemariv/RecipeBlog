@@ -11,6 +11,13 @@ async (req, res) => {
     .send(challenges.map(({ChallengeID,Title}) => {return {ChallengeID,Title}}));
 }
 
+exports.getByID = 
+async (req, res) => {
+    const challenge = await getChallenge(req, res);
+    if (!challenge) {return res.status(404).send({error: 'Recipe not found'});}
+    return res.status(200).send(challenge);
+}
+
 
 const getChallenge = 
 async (req, res) => {

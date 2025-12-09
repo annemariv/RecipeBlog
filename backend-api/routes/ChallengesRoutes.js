@@ -5,11 +5,10 @@ const ChallengesController = require("../controllers/ChallengesController");
 module.exports = (app) => {
     app.route("/challenges")
      .get(ChallengesController.getAll)
-        
-        
 
-    // app.route("/challenges/:ChallengeID")
-    //     .get(ChallengesController.getByID)
+        
+    app.route("/challenges/:ChallengeID")
+      .get(ChallengesController.getByID)
         
 
     }

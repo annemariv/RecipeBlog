@@ -18,6 +18,22 @@ async (req, res) => {
     return res.status(200).send(challenge);
 }
 
+exports.create = async (req, res) => {
+    if (!req.body.Title || !req.body.Description) {
+        return res.status(400).send({error: 'Title and description are required.'});
+    }
+
+    const newChallenge = {
+        Title: req.body.Title,
+        Description: req.body.Description,
+        Is_active: req.body.Is_active || true,
+        
+    }
+
+    const createdChallenge = await db.challenge.create(newChallenge);
+    return res.location(`${Utilities.getBaseURL(req)}/challenges/${createdChallenge.ChallengeID}`).sendStatus(201);
+}
+
 
 const getChallenge = 
 async (req, res) => {

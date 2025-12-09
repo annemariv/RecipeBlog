@@ -5,6 +5,7 @@ const ChallengesController = require("../controllers/ChallengesController");
 module.exports = (app) => {
     app.route("/challenges")
      .get(ChallengesController.getAll)
+        .post(ChallengesController.create);
 
         
     app.route("/challenges/:ChallengeID")

@@ -19,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
         },
         Is_active: {
             type: DataTypes.BOOLEAN,
-            allowNull: true,
+            defaultValue: true,
+            allowNull: false,
         }
     }
     )

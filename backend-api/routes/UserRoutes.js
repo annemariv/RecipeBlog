@@ -7,5 +7,6 @@ module.exports = (app) => {
         .post(UsersController.create)
 
      app.route("/users/:UserID")
-            .get(UsersController.getUserByID)
+        .get(UsersController.getUserByID)
+        .delete(UsersController.deleteUserByID)
 }

@@ -56,3 +56,11 @@ async (req, res) => {
     if (!user) {return res.status(404).send({error: 'User not found'});}
     return res.status(200).send(user);
 }
+
+exports.deleteUserByID = 
+async (req, res) => {
+    const userToBeDeleted = await getUser(req, res);
+    if (!userToBeDeleted) {return;}
+    await userToBeDeleted.destroy();
+    res.status(204).send({error:"No Content"});
+}

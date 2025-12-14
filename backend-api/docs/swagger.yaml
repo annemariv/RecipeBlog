@@ -308,6 +308,37 @@ paths:
             operationId: UserID
             summary: Get full detail of a user
             description: Will return all details of a given user based on UserID given.
+        delete:
+            tags:
+                - users
+            parameters:
+                -
+                    name: UserID
+                    description: Id of user
+                    in: path
+                    required: true
+                    type: string
+            responses:
+                '204':
+                    description: Returns "No Content" when removal of user is successful
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json:
+                            -
+                                error: No Content
+                '404':
+                    description: 'Returns error, when user with specified ID does not exist'
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json:
+                            -
+                                error: Not found
+            operationId: UserID
+            summary: Delete a user from the app
+            description: |
+                Deletes an account from the app
         parameters:
             -
                 name: UserID

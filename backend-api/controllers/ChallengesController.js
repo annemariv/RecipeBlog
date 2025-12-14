@@ -34,6 +34,14 @@ exports.create = async (req, res) => {
     return res.location(`${Utilities.getBaseURL(req)}/challenges/${createdChallenge.ChallengeID}`).sendStatus(201);
 }
 
+exports.deleteByID = 
+async (req, res) => {
+const challengeToBeDeleted = await getChallenge(req, res);
+if (!challengeToBeDeleted) {return;}
+await challengeToBeDeleted.destroy();
+res.status(204).send({error:"No Content"});
+}
+
 
 const getChallenge = 
 async (req, res) => {

@@ -170,6 +170,29 @@ paths:
             operationId: ChallengeID
             summary: Get full detail of a challenge
             description: Will return all details of a given challenge based on ChallengeID given
+        delete:
+            tags:
+                - challenges
+            responses:
+                '204':
+                    description: |
+                        Returns "No Content" when removal of challenges is successful
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json:
+                            -
+                                error: No countent
+                '404':
+                    description: 'Returns error, when challenge with specifiede ID does not exist'
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json:
+                            -
+                                error: Not found
+            summary: Delete a challenge from the app
+            description: Deletes an entry from the app
         parameters:
             -
                 name: ChallengeID
@@ -205,13 +228,7 @@ paths:
                     description: Send 201 when User is successfully added to the DB
                     schema:
                         $ref: '#/definitions/New-User'
-                    examples:
-                        application/json:
-                            -
-                                EmailAddress: a@b.com
-                                Password: abc123
-                                UserName: tester
-                                PhoneNumber2FA: '1234567'
+                    examples: {}
                 '400':
                     description: 'Send 400, when the request body is missing some parameter.'
                     schema:
@@ -297,11 +314,10 @@ definitions:
         description: 'New user data, PhoneNumber2FA is optional'
         type: object
         example:
-            -
-                EmailAddress: a@b.com
-                Password: abc123
-                UserName: tester
-                PhoneNumber2FA: '1234567'
+            EmailAddress: a@b.com
+            Password: abc123
+            UserName: tester
+            PhoneNumber2FA: '1234567'
     New-Challenge:
         title: Root Type for New-Challenge
         description: ''
@@ -323,8 +339,8 @@ definitions:
                 type: string
         example:
             ChallengeID: 43ad65a0-d4f7-11h0-b43r-901b0eec5891
-            Title: Title
-            Description: Description
+            Title: TestTitle
+            Descrpition: TestDescription
             Is_Active: 'True'
             createdAt: '2025-12-01T16:37:08.000Z'
             updatedAt: '2025-12-01T16:37:08.000Z'

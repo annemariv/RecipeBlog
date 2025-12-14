@@ -86,7 +86,7 @@ paths:
                     required: true
             responses:
                 '201':
-                    description: Returns 201 upon successsful modification of film
+                    description: Returns 201 upon successsful modification of recipe
                     schema:
                         $ref: '#/definitions/New-Recipe'
                     examples:
@@ -110,7 +110,7 @@ paths:
                     examples:
                         application/json:
                             -
-                                error: Film not found
+                                error: Recipe not found
         delete:
             tags:
                 - recipes
@@ -170,6 +170,29 @@ paths:
             operationId: ChallengeID
             summary: Get full detail of a challenge
             description: Will return all details of a given challenge based on ChallengeID given
+        delete:
+            tags:
+                - challenges
+            responses:
+                '204':
+                    description: |
+                        Returns "No Content" when removal of challenges is successful
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json:
+                            -
+                                error: No countent
+                '404':
+                    description: 'Returns error, when challenge with specifiede ID does not exist'
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json:
+                            -
+                                error: Not found
+            summary: Delete a challenge from the app
+            description: Deletes an entry from the app
         parameters:
             -
                 name: ChallengeID
@@ -250,6 +273,143 @@ paths:
                         $ref: '#/definitions/Error'
             summary: Create a new challenge into the app
             description: Creates a new challenge with its required details for further usage.
+    '/users/{UserID}/':
+        get:
+            tags:
+                - users
+            parameters:
+                -
+                    name: UserID
+                    description: Id of user
+                    in: path
+                    required: true
+                    type: string
+            responses:
+                '200':
+                    description: Returns all details of the given user.
+                    schema:
+                        type: array
+                        items:
+                            type: string
+                    examples:
+                        application/json:
+                            UserID: 5fa725fd-cec3-11f0-b43f-901b0eec5996
+                            EmailAddress: test@test.com
+                            Password: Pass123
+                            UserName: blogger1
+                            PhoneNumber2FA: '55555555'
+                            IsAdmin: false
+                            createdAt: '2025-12-01T16:37:08.000Z'
+                            updatedAt: '2025-12-01T16:37:08.000Z'
+                '404':
+                    description: Returns error when user not found.
+                    schema:
+                        $ref: '#/definitions/Error'
+            operationId: UserID
+            summary: Get full detail of a user
+            description: Will return all details of a given user based on UserID given.
+        put:
+            tags:
+                - users
+            parameters:
+                -
+                    name: UserID
+                    description: Id of user
+                    in: path
+                    required: true
+                    type: string
+                -
+                    name: body
+                    description: Contains new data to be changed in the specified user account.
+                    schema:
+                        $ref: '#/definitions/New-User'
+                    in: body
+                    required: true
+            responses:
+                '201':
+                    description: Returns 201 upon successsful modification of user
+                    schema:
+                        $ref: '#/definitions/New-User'
+                    examples:
+                        application/json:
+                            UserID: 5fa725fd-cec3-11f0-b43f-901b0eec5996
+                            EmailAddress: test1@test.com
+                            Password: Pass123
+                            UserName: blogger2
+                            PhoneNumber2FA: '55555555'
+                            IsAdmin: false
+                            createdAt: '2025-12-01T16:37:08.000Z'
+                            updatedAt: '2025-12-01T16:37:08.000Z'
+                '400':
+                    description: Returns 400 when one or multile required parameters are missing
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json:
+                            -
+                                error: 'cannot change info, because some parameters are missing'
+                '404':
+                    description: Returns 404 when user to be modified is not found by the given UserID
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json:
+                            -
+                                error: User not found
+            operationId: UserID
+            summary: Update user account
+            description: Updates a user with the given ID.
+        delete:
+            tags:
+                - users
+            parameters:
+                -
+                    name: UserID
+                    description: Id of user
+                    in: path
+                    required: true
+                    type: string
+            responses:
+                '204':
+                    description: Returns "No Content" when removal of user is successful
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json:
+                            -
+                                error: No Content
+                '404':
+                    description: 'Returns error, when user with specified ID does not exist'
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json:
+                            -
+                                error: Not found
+            operationId: UserID
+            summary: Delete a user from the app
+            description: |
+                Deletes an account from the app
+        parameters:
+            -
+                name: UserID
+                description: Id of user
+                in: path
+                required: true
+                type: string
+    /savedrecipes:
+        post:
+            parameters:
+                -
+                    name: body
+                    schema:
+                        $ref: '#/definitions/New-SavedRecipe'
+                    in: body
+                    required: true
+            responses:
+                '201':
+                    schema:
+                        $ref: '#/definitions/New-SavedRecipe'
 definitions:
     Error:
         title: Root Type for Error
@@ -321,3 +481,6 @@ definitions:
             Is_Active: 'True'
             createdAt: '2025-12-01T16:37:08.000Z'
             updatedAt: '2025-12-01T16:37:08.000Z'
+    New-SavedRecipe:
+        description: ''
+        type: object

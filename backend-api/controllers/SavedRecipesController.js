@@ -1,4 +1,4 @@
-const {db} = require('../db.js');
+const { db } = require('../db');
 const Utilities = require('./Utilities.js');
 const UUID = require('uuid');
 
@@ -13,15 +13,14 @@ exports.create = async (req, res) => {
     }
 
     let newSavedRecipe = {
-        SavedRecipeID: UUID.v7(),
         Title: req.body.Title,
         Content: req.body.Content,
         UserID: req.body.UserID,
         RecipeID: req.body.RecipeID
     }
 
-    const savedRecipe = await db.SavedRecipe.create(newSavedRecipe);
+    const createdRecipe = await db.savedRecipes.create(newSavedRecipe);
     res
-    .location(`${Utilities.getBaseURL(req)}/savedrecipes/${savedRecipe.SavedRecipeID}`)
+    .location(`${Utilities.getBaseURL(req)}/savedrecipes/${createdRecipe.SavedRecipeID}`)
     .sendStatus(201);
 }

@@ -1,6 +1,6 @@
 
 module.exports = (sequelize, DataTypes) => {
-    const Recipe = sequelize.define(
+    const SavedRecipe = sequelize.define(
         'SavedRecipe', {
             SavedRecipeID: {
                 type: DataTypes.UUID,

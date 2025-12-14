@@ -10,6 +10,7 @@ module.exports = (app) => {
         
     app.route("/challenges/:ChallengeID")
       .get(ChallengesController.getByID)
-      .delete(ChallengesController.deleteByID);
+      .delete(ChallengesController.deleteByID)
+      .put(ChallengesController.modifyByID);
 
     }

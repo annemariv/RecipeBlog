@@ -42,6 +42,33 @@ await challengeToBeDeleted.destroy();
 res.status(204).send({error:"No Content"});
 }
 
+exports.modifyByID =
+async (req, res) => {
+    const challengeToBeChanged = await getChallenge(req, res);
+    if (!challengeToBeChanged) {
+        return;
+    }
+    if (
+        !req.body.Title ||
+        !req.body.Description
+    ) {
+        return res.status(400).send({error: 'Title and description are required.'});
+    }
+    challengeToBeChanged.Title = req.body.Title;
+    challengeToBeChanged.Description = req.body.Description;
+
+     if (req.body.Is_active !== undefined) {
+    challengeToBeChanged.Is_active = req.body.Is_active;
+    }
+    
+
+    await challengeToBeChanged.save();
+    return res
+        .location(`${Utilities.getBaseURL(req)}/challenges/${challengeToBeChanged.RecipeID}`).sendStatus(200)
+        .send(challengeToBeChanged
+    );
+}
+
 
 const getChallenge = 
 async (req, res) => {

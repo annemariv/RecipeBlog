@@ -86,7 +86,7 @@ paths:
                     required: true
             responses:
                 '201':
-                    description: Returns 201 upon successsful modification of film
+                    description: Returns 201 upon successsful modification of recipe
                     schema:
                         $ref: '#/definitions/New-Recipe'
                     examples:
@@ -110,7 +110,7 @@ paths:
                     examples:
                         application/json:
                             -
-                                error: Film not found
+                                error: Recipe not found
         delete:
             tags:
                 - recipes
@@ -308,6 +308,57 @@ paths:
             operationId: UserID
             summary: Get full detail of a user
             description: Will return all details of a given user based on UserID given.
+        put:
+            tags:
+                - users
+            parameters:
+                -
+                    name: UserID
+                    description: Id of user
+                    in: path
+                    required: true
+                    type: string
+                -
+                    name: body
+                    description: Contains new data to be changed in the specified user account
+                    schema:
+                        $ref: '#/definitions/New-User'
+                    in: body
+                    required: true
+            responses:
+                '201':
+                    description: Returns 201 upon successsful modification of user
+                    schema:
+                        $ref: '#/definitions/New-User'
+                    examples:
+                        application/json:
+                            UserID: 5fa725fd-cec3-11f0-b43f-901b0eec5996
+                            EmailAddress: test1@test.com
+                            Password: Pass123
+                            UserName: blogger2
+                            PhoneNumber2FA: '55555555'
+                            IsAdmin: false
+                            createdAt: '2025-12-01T16:37:08.000Z'
+                            updatedAt: '2025-12-01T16:37:08.000Z'
+                '400':
+                    description: Returns 400 when one or multile required parameters are missing
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json:
+                            -
+                                error: 'cannot change info, because some parameters are missing'
+                '404':
+                    description: Returns 404 when user to be modified is not found by the given UserID
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json:
+                            -
+                                error: User not found
+            operationId: UserID
+            summary: Update user account
+            description: Updates a user with the given ID.
         delete:
             tags:
                 - users

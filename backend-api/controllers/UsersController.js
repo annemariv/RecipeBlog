@@ -1,5 +1,6 @@
 const { db } = require('../db');
 const { gimmePassword } = require('./Utilities');
+const Utilities = require('./Utilities');
 
 exports.getAll = async (req, res) => {
     const users = await db.users.findAll();
@@ -63,4 +64,29 @@ async (req, res) => {
     if (!userToBeDeleted) {return;}
     await userToBeDeleted.destroy();
     res.status(204).send({error:"No Content"});
+}
+
+exports.modifyUserByID =
+async (req, res) => {
+    const userToBeChanged = await getUser(req, res);
+    if (!userToBeChanged) {
+        return;
+    }
+    if (
+        !req.body.EmailAddress ||
+        !req.body.Password || !req.body.UserName
+    ) {
+        return res.status(400).send({error: 'Email, UseerName and password are required.'});
+    }
+    userToBeChanged.EmailAddress = req.body.EmailAddress;
+    userToBeChanged.Password = await gimmePassword(req.body.Password);
+    userToBeChanged.UserName = req.body.UserName;
+    userToBeChanged.PhoneNumber2FA = req.body.PhoneNumber2FA || null;
+    userToBeChanged.IsAdmin = req.body.IsAdmin === true || false;
+
+    await userToBeChanged.save();
+    return res
+        .location(`${Utilities.getBaseURL(req)}/users/${userToBeChanged.UserID}`).sendStatus(201)
+        .send(userToBeChanged
+    );
 }

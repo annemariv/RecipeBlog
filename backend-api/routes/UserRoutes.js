@@ -5,4 +5,7 @@ module.exports = (app) => {
         .get(UsersController.getAll)
         app.route("/users")
         .post(UsersController.create)
+
+     app.route("/users/:UserID")
+            .get(UsersController.getUserByID)
 }

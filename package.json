@@ -11,8 +11,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.13.2",
     "concurrently": "^9.2.1",
     "nodemon": "^3.1.11",
     "vue": "^3.5.25"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/annemariv/RecipeBlog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/annemariv/RecipeBlog/issues"
+  },
+  "homepage": "https://github.com/annemariv/RecipeBlog#readme"
 }

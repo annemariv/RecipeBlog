@@ -37,3 +37,30 @@ exports.create = async (req, res) => {
         return res.status(500).send({ error: err.message });
     }
 };
+
+const getUser = 
+async (req, res) => {
+    const idNumber = req.params.UserID;
+    const user = await db.users.findByPk(idNumber);
+    if(!user) {
+        res.status(404).send({error: `User with id ${idNumber} was not found`})
+        return null;
+    }
+   
+    return user;
+}
+
+exports.getUserByID = 
+async (req, res) => {
+    const user = await getUser(req, res);
+    if (!user) {return res.status(404).send({error: 'User not found'});}
+    return res.status(200).send(user);
+}
+
+exports.deleteUserByID = 
+async (req, res) => {
+    const userToBeDeleted = await getUser(req, res);
+    if (!userToBeDeleted) {return;}
+    await userToBeDeleted.destroy();
+    res.status(204).send({error:"No Content"});
+}

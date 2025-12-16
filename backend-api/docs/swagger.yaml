@@ -193,6 +193,29 @@ paths:
                                 error: Not found
             summary: Delete a challenge from the app
             description: Deletes an entry from the app
+        delete:
+            tags:
+                - challenges
+            responses:
+                '204':
+                    description: |
+                        Returns "No Content" when removal of challenges is successful
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json:
+                            -
+                                error: No countent
+                '404':
+                    description: 'Returns error, when challenge with specifiede ID does not exist'
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json:
+                            -
+                                error: Not found
+            summary: Delete a challenge from the app
+            description: Deletes an entry from the app
         parameters:
             -
                 name: ChallengeID

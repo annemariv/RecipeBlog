@@ -55,6 +55,12 @@ export default {
       this.loading = false;
     }
   },
+  //delete
+  methods: {
+     removeRecipe(id) {
+    this.recipes = this.recipes.filter(recipe => recipe.RecipeID !== id);
+    },
+  },
 };
 </script>
 
@@ -65,8 +71,12 @@ export default {
     <p v-if="loading">Loading...</p>
     <p v-if="error">Error loading recipes</p>
 
-    <RecipeTable v-if="recipes.length" :items="recipes" />
+    <RecipeTable 
+    v-if="recipes.length"
+    :items="recipes"
+    @deleted="removeRecipe" />
     <p v-else>No recipes found</p>
+    
   </main>
 </template>
 

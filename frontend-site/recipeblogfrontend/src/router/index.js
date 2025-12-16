@@ -34,7 +34,7 @@ const routes = [
   //GetById
     {
     path: "/recipes/:RecipeID",
-    name: "SignleRecipe",
+    name: "SingleRecipe",
     component: SingleRecipeView,
     props: true,
   },

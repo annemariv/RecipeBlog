@@ -32,6 +32,8 @@ export default {
     </table>
 </template> -->
 <script>
+  import { deleteRecipe } from '../api/Recipes';
+
 export default {
   name: "RecipeTable",
   props: {
@@ -40,6 +42,16 @@ export default {
       required: true,
     },
   },
+  methods: {
+      async handleDelete(id) {
+        try {
+          await deleteRecipe(id);
+          this.$emit("deleted", id);
+        } catch (err) {
+          console.error("Failed to delete recipe", err)
+        }
+      }
+    }
 };
 </script>
 
@@ -59,6 +71,9 @@ export default {
         <td><router-link :to="`/recipes/${item.RecipeID}`">
               View recipe
             </router-link>
+        </td>
+        <td>
+          <button @click="handleDelete(item.RecipeID)">Delete</button>
         </td>
       </tr>
     </tbody>

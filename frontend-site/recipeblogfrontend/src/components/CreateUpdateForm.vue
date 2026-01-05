@@ -7,10 +7,10 @@ const route = useRoute()
 const router = useRouter()
 
 // id exists for edit, undefined for create
-const id = route.params.id
+const id = route.params.RecipeID
 
 const form = reactive({
-  Recipe_Title: '',
+  Title: '',
   Content: '',
   images: []
 })
@@ -21,7 +21,7 @@ const newImages = ref([])
 const loadRecipe = async () => {
   if (id) {
     const { data } = await getRecipeById(id)
-    form.Recipe_Title = data.Recipe_Title || ''
+    form.Title = data.Title || ''
     form.Content = data.Content || ''
     form.images = data.images || []
   }
@@ -30,7 +30,7 @@ const loadRecipe = async () => {
 onMounted(loadRecipe)
 
 // Optional: if route param changes without remount
-watch(() => route.params.id, loadRecipe)
+watch(() => route.params.RecipeID, loadRecipe)
 
 // Input handlers
 const handleChange = (e) => {
@@ -47,7 +47,7 @@ const handleSubmit = async (e) => {
   e.preventDefault()
 
   const payload = {
-  Title: form.Recipe_Title,
+  Title: form.Title,
   Content: form.Content,
   Image: null // or URL if you have one
 }
@@ -58,7 +58,7 @@ const handleSubmit = async (e) => {
 } else {
   await createRecipe(payload)
 }
-    router.push('/')
+    router.push('/recipes')
   } catch (err) {
     console.error('Error saving recipe:', err)
   }
@@ -76,7 +76,7 @@ const handleSubmit = async (e) => {
           type="text"
           class="form-control"
           name="Recipe_Title"
-          v-model="form.Recipe_Title"
+          v-model="form.Title"
           required
         />
       </div>
@@ -109,7 +109,7 @@ const handleSubmit = async (e) => {
       <button
         type="button"
         class="btn-cancel"
-        @click="router.push('/')"
+        @click="router.push('/recipes')"
       >
         {{ id ? 'Cancel' : 'Back' }}
       </button>

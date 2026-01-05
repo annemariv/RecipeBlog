@@ -75,6 +75,11 @@ export default {
         <td>
           <button @click="handleDelete(item.RecipeID)">Delete</button>
         </td>
+         <div>
+          <router-link :to="`/recipe/edit/${item.RecipeID}`">
+            <button>Edit Recipe</button>
+          </router-link>
+        </div>
       </tr>
     </tbody>
   </table>

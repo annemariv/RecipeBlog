@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import RecipeView from "../views/RecipeView.vue";
 import SingleRecipeView from "../views/SingleRecipeView.vue";
+import CreateUpdateForm from "../components/CreateUpdateForm.vue";
 //import RecipeView from "../views/RecipeView.vue";
 // const routes = [
 //   {
@@ -38,6 +39,17 @@ const routes = [
     component: SingleRecipeView,
     props: true,
   },
+  //Create & Update
+  {
+    path: '/recipe/create',
+    name: 'recipe-create',
+    component: CreateUpdateForm
+  },
+   {
+  path: '/recipe/edit/:RecipeID',
+  name: 'recipe-edit',
+  component: CreateUpdateForm
+},
 
   {
     path: "/about",

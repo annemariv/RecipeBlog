@@ -61,6 +61,12 @@ export default {
     this.recipes = this.recipes.filter(recipe => recipe.RecipeID !== id);
     },
   },
+  //create
+  methods: {
+    createRecipe(recipeData) {
+      this.recipes.push(recipeData);
+    },
+  },
 };
 </script>
 
@@ -76,6 +82,11 @@ export default {
     :items="recipes"
     @deleted="removeRecipe" />
     <p v-else>No recipes found</p>
+    <div>
+      <router-link to="/recipe/create">
+        <button>Create New Recipe</button>
+      </router-link>
+    </div>
     
   </main>
 </template>

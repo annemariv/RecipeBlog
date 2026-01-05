@@ -3,7 +3,8 @@ const { gimmePassword } = require('./Utilities');
 
 exports.getAll = async (req, res) => {
     const users = await db.users.findAll();
-    res.status(200).send(users);
+    res.status(200)
+    .send(users.map(({UserID, UserName, IsAdmin}) => {return{UserID, UserName, IsAdmin}}));
 };
 
 exports.create = async (req, res) => {

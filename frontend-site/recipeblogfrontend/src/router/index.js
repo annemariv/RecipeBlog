@@ -3,21 +3,8 @@ import HomeView from "../views/HomeView.vue";
 import RecipeView from "../views/RecipeView.vue";
 import SingleRecipeView from "../views/SingleRecipeView.vue";
 import CreateUpdateForm from "../components/CreateUpdateForm.vue";
-//import RecipeView from "../views/RecipeView.vue";
-// const routes = [
-//   {
-//     path: "/recipes",
-//     name: "Recipes",
-//     component: RecipeView,
-//   },
-// ];
-
-// const router = createRouter({
-//   history: createWebHistory(),
-//   routes,
-// });
-
-// export default router;
+import SignUpForm from "../components/SignUpForm.vue";
+import AccountCreated from "../components/AccountCreated.vue";
 
 const routes = [
   {
@@ -49,7 +36,7 @@ const routes = [
   path: '/recipe/edit/:RecipeID',
   name: 'recipe-edit',
   component: CreateUpdateForm
-},
+  },
 
   {
     path: "/about",
@@ -68,13 +55,22 @@ const routes = [
   component: () =>
     import("../views/RecipeView.vue"),
   },
-  
   {
     path: "/recipes/:itemID",
     name: "recipe",
     component: ()=>
       import("../views/SingleRecipeView.vue"),
     props: route => {return{seekID: String(route.params.RecipeID)}}
+  },
+  {
+    path: "/signup",
+    name: "signup",
+    component: SignUpForm,
+  },
+  {
+    path: "/account-created",
+    name: "account-created",
+    component: AccountCreated,
   }
 ];
 

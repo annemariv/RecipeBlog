@@ -47,6 +47,7 @@ export default {
         try {
           await deleteRecipe(id);
           this.$emit("deleted", id);
+          window.location.reload();
         } catch (err) {
           console.error("Failed to delete recipe", err)
         }

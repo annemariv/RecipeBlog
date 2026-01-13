@@ -23,13 +23,14 @@
 <script>
 import { getAllRecipes } from "../api/Recipes";
 import RecipeTable from "../components/RecipeTable.vue";
+import RecipeCard from "@/components/RecipeCard.vue";
 
 
 export default {
   name: "RecipeView",
 
   components: {
-    RecipeTable,
+    RecipeCard,
   },
 
   data() {
@@ -72,22 +73,46 @@ export default {
 
 <template>
   <main>
-    <h1>Recipes</h1>
+    <h1 class="Title">Recipes</h1>
 
     <p v-if="loading">Loading...</p>
     <p v-if="error">Error loading recipes</p>
 
-    <RecipeTable 
+    <RecipeCard 
     v-if="recipes.length"
     :items="recipes"
     @deleted="removeRecipe" />
     <p v-else>No recipes found</p>
     <div>
       <router-link to="/recipe/create">
-        <button>Create New Recipe</button>
+        <button class="create-btn">Create New Recipe</button>
       </router-link>
     </div>
     
   </main>
 </template>
+<style>
+.create-btn {
+  position: fixed;
+  margin: 16px;
+  right: 24px;
+  top: 100px;
+  font-size: 20px;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.Title {
+  padding: 8px 12px;
+  text-align: left;
+  margin: 16px;
+  left: 24px;
+  color: #7f5539;
+}
+</style>
 

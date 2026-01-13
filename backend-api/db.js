@@ -37,7 +37,7 @@ db.users.belongsToMany(db.recipes, {through: db.savedRecipes});
 // db.recipes.hasMany(db.savedRecipes)
 
 const sync = (async () => {
-    await sequelize.sync({});
+    await sequelize.sync({ force: true});
     console.log('DB sync has been completed')
 })
 

@@ -14,6 +14,14 @@ module.exports = (sequelize, DataTypes) => {
             Content: {
                 type: DataTypes.STRING,
                 allowNull: false,
+            },
+            RecipeRecipeID: {
+                type: DataTypes.UUID,
+                allowNull: false
+            },
+            UserUserID: {
+            type: DataTypes.UUID,
+            allowNull: false
             }
         }
     )

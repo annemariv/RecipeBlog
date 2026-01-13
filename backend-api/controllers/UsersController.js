@@ -39,17 +39,45 @@ exports.create = async (req, res) => {
     }
 };
 
-const getUser = 
-async (req, res) => {
-    const idNumber = req.params.UserID;
-    const user = await db.users.findByPk(idNumber);
-    if(!user) {
-        res.status(404).send({error: `User with id ${idNumber} was not found`})
-        return null;
+
+exports.getByEmail = async (req, res) => {
+    const user = await getUser(req, res, "Email");
+    if (!user) return;
+    return res.status(200).send(user);
+};
+
+const getUser = async (req, res, gtype) => {
+    try {
+        if (gtype === "ID") {
+            const id = req.params.UserID;
+            if (!id) return res.status(400).send({ error: "UserID is required" });
+
+            const user = await db.users.findByPk(id);
+            if (!user) return res.status(404).send({ error: "User not found" });
+
+            return user;
+        }
+
+        if (gtype === "Email") {
+            const email = req.params.LoginEmail;
+            if (!email) return res.status(400).send({ error: "Email is required" });
+
+            const user = await db.users.findOne({
+                where: { EmailAddress: email }
+            });
+
+            if (!user) return res.status(404).send({ error: "User not found" });
+
+            return user;
+        }
+
+        return res.status(400).send({ error: "Invalid lookup type" });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send({ error: "Server error" });
     }
-   
-    return user;
-}
+};
+
 
 exports.getUserByID = 
 async (req, res) => {

@@ -582,6 +582,33 @@ paths:
                         application/json: "\t{\"error\":\"Server error\"}"
             summary: make session get cookie
             description: Inserts a session object into db and gives the user a cookie
+    /sessions/me:
+        get:
+            tags:
+                - auth
+                - users
+            responses:
+                '200':
+                    description: Responds when refresh of login is successful
+                    schema:
+                        $ref: '#/definitions/LoggedIn-User'
+                    examples:
+                        application/json:
+                            -
+                                UserID: 6
+                                DisplayName: z
+                                EmailAddress: b3
+                                IsAdmin: true
+                                message: qn
+                '401':
+                    description: 'Returns 401, when reauthentication of User unsuccesful'
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json:
+                            -
+                                error: 'Session expired, please log in again.'
+            summary: Endpoints to refresh login
 definitions:
     Error:
         title: Root Type for Error

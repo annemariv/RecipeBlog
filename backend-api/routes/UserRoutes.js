@@ -17,4 +17,6 @@ module.exports = (app) => {
     app.route("/sessions")
         .post(SessionController.newSession)
 
+    app.route("/sessions/me")
+        .get(SessionController.me)
 }

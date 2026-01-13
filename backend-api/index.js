@@ -21,10 +21,6 @@ app.use(cors());
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use(express.json());
 
-require('./routes/RecipeRoutes.js')(app);
-require('./routes/UserRoutes.js')(app);
-require('./routes/SavedRecipes.js')(app);
-
 //sessioni sisu
 app.use(session({
     secret: process.env.SESSIONSECRET || "dev",
@@ -40,6 +36,9 @@ app.use(session({
 }))
 sessionStore.sync(); // sinkroniseeri tabel
 
+require('./routes/RecipeRoutes.js')(app);
+require('./routes/UserRoutes.js')(app);
+require('./routes/SavedRecipes.js')(app);
 
 app.listen(port, async () => {
     if (process.env.SYNC === 'true') {await sync();}

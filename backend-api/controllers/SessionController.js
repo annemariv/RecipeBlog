@@ -2,7 +2,6 @@ const { db } = require('../db');
 const Utilities = require('./Utilities.js');
 
 exports.newSession = async (req, res) => {
-    // 1️⃣ Check for missing parameters
     if (!req.body.LoginEmail || !req.body.LoginPassword) {
         let missingParams = "";
         if (!req.body.LoginEmail) missingParams += "No email provided. ";
@@ -17,7 +16,6 @@ exports.newSession = async (req, res) => {
         const LoginEmail = req.body.LoginEmail;
         const LoginPassword = req.body.LoginPassword;
 
-        // 2️⃣ Look up user by email
         const userToProvideSessionFor = await db.users.findOne({
             where: { EmailAddress: LoginEmail }
         });
@@ -26,17 +24,15 @@ exports.newSession = async (req, res) => {
             return res.status(404).send({ error: "User not found" });
         }
 
-        // 3️⃣ Check password using Utilities.letMeIn
-        const isCorrect = await Utilities.letMeIn(LoginPassword, userToProvideSessionFor.PasswordHASH);
+        const isCorrect = await Utilities.letMeIn(LoginPassword, userToProvideSessionFor.Password);
 
         if (!isCorrect) {
             return res.status(401).send({ error: "Password mismatch" });
         }
 
-        // 4️⃣ Set session
         req.session.UserID = userToProvideSessionFor.UserID;
 
-        // 5️⃣ Send success response
+
         return res.status(200).send({
             UserID: userToProvideSessionFor.UserID,
             DisplayName: userToProvideSessionFor.DisplayName,

@@ -574,6 +574,12 @@ paths:
                     examples:
                         application/json:
                             error: Not found
+                '500':
+                    description: Returns server error
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json: "\t{\"error\":\"Server error\"}"
             summary: make session get cookie
             description: Inserts a session object into db and gives the user a cookie
 definitions:

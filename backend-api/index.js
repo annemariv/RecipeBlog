@@ -4,13 +4,14 @@ const host = 'localhost';
 const express = require('express');
 const cors = require('cors');
 const app = express();
+const session = require('express-session');
 
 const swaggerUI = require('swagger-ui-express');
 const yamljs = require('yamljs');
 
 const swaggerDocument = yamljs.load('./docs/swagger.yaml');
 //const swaggerDocument = require('./docs/swagger.json');
-const { sync } = require('./db');
+const { sync, sessionStore } = require('./db');
 
 //app.get('/recipes', (req, res) => {
 //    res.send(["recipe1", "recipe2", "recipe3"])
@@ -23,6 +24,21 @@ app.use(express.json());
 require('./routes/RecipeRoutes.js')(app);
 require('./routes/UserRoutes.js')(app);
 require('./routes/SavedRecipes.js')(app);
+
+//sessioni sisu
+app.use(session({
+    secret: process.env.SESSIONSECRET || "dev",
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        httpOnly: true,
+        sameSite: "lax",
+        secure: false,
+        maxAge: 7*24*60*60*1000
+    }
+}))
+sessionStore.sync(); // sinkroniseeri tabel
 
 
 app.listen(port, async () => {

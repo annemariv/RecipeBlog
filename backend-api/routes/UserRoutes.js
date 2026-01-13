@@ -14,7 +14,7 @@ module.exports = (app) => {
     app.route("/auth/:LoginEmail")
         .get(UsersController.getByEmail)
 
-    app.route("/auth")
+    app.route("/sessions")
         .post(SessionController.newSession)
 
 }

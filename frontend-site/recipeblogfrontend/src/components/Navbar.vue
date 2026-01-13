@@ -1,82 +1,27 @@
 <template>
-  <nav class="navbar">
-    <div class="navbar-container">
-      <router-link to="/" class="navbar-brand">
-        Recipe<span>App</span>
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow" style="background-color: #7f5539;">
+    <div class="container">
+      <router-link to="/" class="navbar-brand fw-bold fs-3">
+        Recipe<span style="color: #ede0d4;">App</span>
       </router-link>
 
-      <div class="navbar-links">
-        <router-link to="/" class="nav-item">Home</router-link>
-        <router-link to="/about" class="nav-item">About</router-link>
-        <router-link to="/recipes" class="nav-item">Recipes</router-link>
-        <router-link to="/signup" class="nav-btn">Sign Up</router-link>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="navbar-nav ms-auto align-items-center">
+          <router-link to="/" class="nav-link px-3 text-white">Home</router-link>
+          <router-link to="/about" class="nav-link px-3 text-white">About</router-link>
+          <router-link to="/recipes" class="nav-link px-3 text-white">Recipes</router-link>
+          
+          <router-link to="/signup" class="btn btn-sm ms-lg-3 px-4 py-2 fw-bold text-white shadow-sm" 
+            style="background-color: #b08968; border-radius: 8px;">
+            Sign Up
+          </router-link>
+        </div>
       </div>
     </div>
   </nav>
 </template>
 
-<script setup>
-</script>
-
-<style scoped>
-.navbar {
-  background-color: #7f5539;
-  padding: 1rem 0;
-  color: #e6ccb2;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  height: 2rem;
-}
-
-.navbar-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-.navbar-brand {
-  font-size: 1.5rem;
-  font-weight: 700;
-  text-decoration: none;
-  color: #e6ccb2;
-  letter-spacing: -1px;
-}
-
-.navbar-brand span {
-  color: #7f5539; 
-}
-
-.navbar-links {
-  display: flex;
-  align-items: center;
-  gap: 25px;
-}
-
-.nav-item {
-  text-decoration: none;
-  color: #e6ccb2;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.nav-item:hover {
-  color: white;
-}
-
-.nav-btn {
-  text-decoration: none;
-  background-color: #b08968;
-  color: #e6ccb2;
-  padding: 8px 20px;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: transform 0.2s, background-color 0.2s;
-}
-
-.nav-btn:hover {
-  background-color: #ffffff;
-  transform: translateY(-2px);
-}
-</style>

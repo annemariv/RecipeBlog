@@ -1,31 +1,15 @@
 <template>
-  <div>
-    <footer id="footer">
-      <div class="col col1">
-        <h3>Recipe Blog</h3>
-        <p style="color: #b08968; font-size: smaller">2024 © All Rights Reserved</p>
+  <footer class="w-100 py-4 mt-auto" style="background-color: #7f5539;">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-start">
+          <h3 class="fw-bold mb-0" style="color: #e6ccb2;">Recipe Blog</h3>
+          <p class="mb-0" style="color: #b08968; font-size: 0.85rem;">
+            2024 © All Rights Reserved
+          </p>
+        </div>
       </div>
-    </footer>
-
-  </div>
+    </div>
+  </footer>
 </template>
-<style>
-#footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: #7f5539;
-  color: #e6ccb2;
-  display: flex;
-  justify-content: flex-start; 
-  padding: 1rem; 
-  text-align: left; 
-  overflow: hidden;
-  box-sizing: border-box; 
-}
 
-.col {
-  margin: 0;
-}
-</style>

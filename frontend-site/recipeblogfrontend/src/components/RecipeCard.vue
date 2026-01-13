@@ -23,98 +23,56 @@ export default {
 </script>
 
 <template>
-  <div class="recipe-grid">
-    <div v-for="item in items" :key="item.RecipeID" class="recipe-card">
-      <div class="card-header">
-        <span class="recipe-id">#{{ item.RecipeID }}</span>
-        <h3 class="recipe-title">{{ item.Title }}</h3>
-      </div>
+  <div class="container my-5">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
       
-      <div class="card-actions">
-        <router-link :to="`/recipes/${item.RecipeID}`" class="btn view-btn">
-          View Recipe
-        </router-link>
-        
-        <router-link :to="`/recipe/edit/${item.RecipeID}`" class="btn edit-btn">
-          Edit
-        </router-link>
-        
-        <button @click="handleDelete(item.RecipeID)" class="btn delete-btn">
-          Delete
-        </button>
+      <div v-for="item in items" :key="item.RecipeID" class="col">
+        <div class="card h-100 shadow-sm border-0" style="background-color: #fefae0;">
+          <img class="card-img-top" src="https://via.placeholder.com/300x180?text=Recipe+Image" alt="Recipe image">
+          
+          <div class="card-body d-flex flex-column">
+            <span class="recipe-id text-uppercase fw-bold" style="color: #bc6c25; font-size: 0.75rem;">
+              ID: #{{ item.RecipeID }}
+            </span>
+            <h5 class="card-title fw-bold mt-1" style="color: #606c38;">{{ item.Title }}</h5>
+            
+            <p class="card-text text-muted small flex-grow-1">
+             Take a look at this {{ item.Title }} recipe.
+            </p>
+
+            <div class="d-flex flex-wrap gap-2 mt-3 pt-3 border-top">
+              <router-link :to="`/recipes/${item.RecipeID}`" class="btn btn-sm text-white" style="background-color: #606c38;">
+                View
+              </router-link>
+              
+              <router-link :to="`/recipe/edit/${item.RecipeID}`" class="btn btn-sm text-white" style="background-color: #d4a373;">
+                Edit
+              </router-link>
+              
+              <button @click="handleDelete(item.RecipeID)" class="btn btn-sm text-white" style="background-color: #bc6c25;">
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
+
     </div>
   </div>
 </template>
 <style scoped>
-/* 1. The Grid Container */
-.recipe-grid {
-  display: grid;
-  /* This creates as many cards as fit, at least 300px wide each */
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  padding: 20px;
+.card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-
-/* 2. The Individual Card */
-.recipe-card {
-  background-color: #fefae0; /* Light cream */
-  border: 1px solid #d4a373; /* Light brown border */
-  border-radius: 12px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.2s, box-shadow 0.2s;
-  text-align: left; /* Keep text to the left */
-}
-
-.recipe-card:hover {
+.card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(127, 85, 57, 0.2);
+  box-shadow: 0 8px 15px rgba(127, 85, 57, 0.15) !important;
 }
 
-/* 3. Typography */
-.recipe-id {
-  color: #bc6c25;
-  font-size: 0.8rem;
-  font-weight: bold;
+.card-img-top {
+  height: 180px;
+  object-fit: cover; 
+  border-top-left-radius: calc(0.375rem - 1px);
+  border-top-right-radius: calc(0.375rem - 1px);
 }
-
-.recipe-title {
-  margin: 10px 0;
-  color: #606c38; /* Earthy green for titles */
-  font-size: 1.25rem;
-}
-
-/* 4. Action Buttons Container */
-.card-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 15px;
-  border-top: 1px solid #e9edc9;
-  padding-top: 15px;
-}
-
-/* 5. Generic Button Styles */
-.btn {
-  text-decoration: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-
-.btn:hover {
-  opacity: 0.8;
-}
-
-/* 6. Specific Button Colors */
-.view-btn { background-color: #ccd5ae; color: #606c38; }
-.edit-btn { background-color: #d4a373; color: white; }
-.delete-btn { background-color: #bc6c25; color: white; }
 </style>

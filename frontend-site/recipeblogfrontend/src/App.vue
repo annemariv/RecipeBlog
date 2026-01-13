@@ -1,43 +1,31 @@
 <script setup>
 import {RouterLink, RouterView} from "vue-router";
 import Navbar from "./components/Navbar.vue";
-import Footer from "./components/AppFooter.vue"; 
 import AppFooter from "./components/AppFooter.vue";
 </script>
 
 <template>
-  <navbar/>
-  <router-view/>
-  <app-footer/>
+  <div class="d-flex flex-column min-vh-100">
+    <Navbar />
 
+    <main class="flex-grow-1 pt-5 mt-4">
+      <div class="container mt-3">
+        <router-view />
+      </div>
+    </main>
+
+    <AppFooter />
+  </div>
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-body, html {
+body {
+  background-color: #ede0d4; 
+  color: #7f5539; 
   margin: 0;
-  padding: 0;
-  width: 100%;
-  background-color: #ede0d4; /* Match your sign-up card color */
-  color: #7f5539; /* Makes all text white by default */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-
-nav a.router-link-exact-active {
-  color: #42b983;
+a {
+  text-decoration: none;
 }
 </style>

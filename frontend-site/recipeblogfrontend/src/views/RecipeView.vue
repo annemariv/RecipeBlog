@@ -72,47 +72,23 @@ export default {
 </script>
 
 <template>
-  <main>
-    <h1 class="Title">Recipes</h1>
+  <main class="container mt-5 pt-3">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="m-0">Recipes</h1>
+      
+      <router-link to="/recipe/create">
+        <button class="btn btn-success">Create New Recipe</button>
+      </router-link>
+    </div>
 
     <p v-if="loading">Loading...</p>
     <p v-if="error">Error loading recipes</p>
 
     <RecipeCard 
-    v-if="recipes.length"
-    :items="recipes"
-    @deleted="removeRecipe" />
-    <p v-else>No recipes found</p>
-    <div>
-      <router-link to="/recipe/create">
-        <button class="create-btn">Create New Recipe</button>
-      </router-link>
-    </div>
-    
+      v-if="recipes.length"
+      :items="recipes"
+      @deleted="removeRecipe" 
+    />
+    <p v-else-if="!loading">No recipes found</p>
   </main>
 </template>
-<style>
-.create-btn {
-  position: fixed;
-  margin: 16px;
-  right: 24px;
-  top: 100px;
-  font-size: 20px;
-  text-decoration: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-.Title {
-  padding: 8px 12px;
-  text-align: left;
-  margin: 16px;
-  left: 24px;
-  color: #7f5539;
-}
-</style>
-

@@ -18,5 +18,5 @@ module.exports = (app) => {
         .post(SessionController.newSession)
 
     app.route("/sessions/me")
-        .get(SessionController.me)
+        .get(SessionController.reauthenticate)
 }

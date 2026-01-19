@@ -21,7 +21,7 @@ app.use(cors());
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use(express.json());
 
-//sessioni sisu
+//session 
 app.use(session({
     secret: process.env.SESSIONSECRET || "dev",
     store: sessionStore,
@@ -34,7 +34,7 @@ app.use(session({
         maxAge: 7*24*60*60*1000
     }
 }))
-sessionStore.sync(); // sinkroniseeri tabel
+sessionStore.sync(); // sync table
 
 require('./routes/RecipeRoutes.js')(app);
 require('./routes/UserRoutes.js')(app);

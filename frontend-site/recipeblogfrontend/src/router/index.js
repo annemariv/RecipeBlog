@@ -5,6 +5,8 @@ import SingleRecipeView from "../views/SingleRecipeView.vue";
 import CreateUpdateForm from "../components/CreateUpdateForm.vue";
 import SignUpForm from "../components/SignUpForm.vue";
 import AccountCreated from "../components/AccountCreated.vue";
+import LogInForm from "../components/LogInForm.vue";
+import AccountLogedIn from "../components/AccountLogedIn.vue";
 
 const routes = [
   {
@@ -68,9 +70,19 @@ const routes = [
     component: SignUpForm,
   },
   {
+    path: "/login",
+    name: "login",
+    component: LogInForm,
+  },
+  {
     path: "/account-created",
     name: "account-created",
     component: AccountCreated,
+  },
+  {
+    path: "/account-loged-in",
+    name: "account-loged-in",
+    component: AccountLogedIn,
   }
 ];
 

@@ -41,6 +41,7 @@ app.use(session({
 sessionStore.sync(); // sinkroniseeri tabel
 
 
+
 app.listen(port, async () => {
     if (process.env.SYNC === 'true') {await sync();}
     console.log(`API address: http://localhost:${port}`)

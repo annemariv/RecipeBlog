@@ -1,5 +1,5 @@
-const {db} = require('./db');
-const Utilities = rquire('./Utilities.js');
+const {db} = require('../db.js');
+const Utilities = require('./Utilities.js');
 
 exports.newSession =
 async (req, res) => {

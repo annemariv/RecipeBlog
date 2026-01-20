@@ -40,6 +40,7 @@ require('./routes/RecipeRoutes.js')(app);
 require('./routes/UserRoutes.js')(app);
 require('./routes/SavedRecipes.js')(app);
 
+
 app.listen(port, async () => {
     if (process.env.SYNC === 'true') {await sync();}
     console.log(`API address: http://localhost:${port}`)

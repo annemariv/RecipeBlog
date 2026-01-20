@@ -18,6 +18,7 @@ export default {
     localStorage.setItem("LoggedInUserID", user.UserID);
     localStorage.setItem("isAdmin", user.IsAdmin);
 
+    window.location.reload();
     this.$router.push("/account-loged-in");
   } catch (err) {
     console.error(err.response?.data || err.message);

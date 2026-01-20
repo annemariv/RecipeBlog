@@ -1,16 +1,15 @@
-//all routes are added here
 const RecipesController = require("../controllers/RecipesController");
 
-//all modules are added here
+const { authenticate } = require("../middleware/auth");
+const { requireAdmin } = require("../middleware/admin");
+
 module.exports = (app) => {
     app.route("/recipes")
-        .get(RecipesController.getAll)
-        .post(RecipesController.create)
-        
+        .get(RecipesController.getAll) // public
+        .post(authenticate, requireAdmin, RecipesController.create); // admin only
 
     app.route("/recipes/:RecipeID")
-        .get(RecipesController.getByID)
-        .delete(RecipesController.deleteByID)
-        .put(RecipesController.modifyByID);
-
-    }
+        .get(RecipesController.getByID) // public
+        .delete(authenticate, requireAdmin, RecipesController.deleteByID) // admin only
+        .put(authenticate, requireAdmin, RecipesController.modifyByID); // admin only
+};

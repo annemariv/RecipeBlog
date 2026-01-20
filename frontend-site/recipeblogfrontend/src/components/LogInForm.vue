@@ -12,14 +12,17 @@ export default {
     };
   },
   methods: {
-    async login() {
-      try {
-        await loginUser(this.Credentials);
-        this.$router.push("/account-loged-in");
-      } catch (err) {
-         console.error(err.response?.data || err.message);
-      }
-    }
+   async login() {
+  try {
+    const user = await loginUser(this.Credentials);
+    localStorage.setItem("LoggedInUserID", user.UserID);
+    localStorage.setItem("isAdmin", user.IsAdmin);
+
+    this.$router.push("/account-loged-in");
+  } catch (err) {
+    console.error(err.response?.data || err.message);
+  }
+}
   }
 };
 </script>

@@ -35,6 +35,11 @@ export default {
   import { deleteRecipe } from '../api/Recipes';
 
 export default {
+  computed: {
+  isAdmin() {
+    return localStorage.getItem("isAdmin") === "true";
+  }
+},
   name: "RecipeTable",
   props: {
     items: {
@@ -74,11 +79,11 @@ export default {
             </router-link>
         </td>
         <td>
-          <button @click="handleDelete(item.RecipeID)">Delete</button>
+          <button v-if="isAdmin" @click="handleDelete(item.RecipeID)">Delete</button>
         </td>
          <div>
-          <router-link :to="`/recipe/edit/${item.RecipeID}`">
-            <button>Edit Recipe</button>
+          <router-link v-if="isAdmin" :to="`/recipe/edit/${item.RecipeID}`">
+            <button >Edit Recipe</button>
           </router-link>
         </div>
       </tr>

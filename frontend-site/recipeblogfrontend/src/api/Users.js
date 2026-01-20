@@ -1,15 +1,17 @@
 import axios from "axios";
 
-const API_BASE = "http://localhost:9000";
+const API_URL = "http://localhost:9000";
 
 // users
-export const getAllUsers = () => axios.get(`${API_BASE}/users`);
+export const getAllUsers = () => axios.get(`${API_URL}/users`);
 
-export const getUserById = (id) => axios.get(`${API_BASE}/users/${id}`);
+export const getUserById = (id) => axios.get(`${API_URL}/users/${id}`);
 
-export const signUpUser = (userData) => axios.post(`${API_BASE}/users`, userData);
-
-export const deleteUser = (id) => axios.delete(`${API_BASE}/users/${id}`);
+export const signUpUser = (userData) => axios.post(`${API_URL}/users`, userData);
+export const deleteUser = (id) => axios.delete(`${API_URL}/users/${id}`);
 
 // sessions
-export const loginUser = (credentials) => axios.post(`${API_BASE}/sessions/login`, credentials);
+export const loginUser = async (credentials) => {
+  const response = await axios.post(`${API_URL}/sessions`, credentials); 
+  return response.data;
+};

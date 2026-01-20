@@ -21,5 +21,5 @@ module.exports = (app) => {
         .get(SessionController.reauthenticate)
         
     app.route("/auth/logout")
-    .delete(SessionsController.removeSession)
+    .delete(SessionController.removeSession)
 }

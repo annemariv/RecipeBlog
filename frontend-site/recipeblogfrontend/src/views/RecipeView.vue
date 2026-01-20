@@ -26,6 +26,11 @@ import RecipeTable from "../components/RecipeTable.vue";
 
 
 export default {
+  computed: {
+  isAdmin() {
+    return localStorage.getItem("isAdmin") === "true";
+  }
+},
   name: "RecipeView",
 
   components: {
@@ -82,7 +87,7 @@ export default {
     :items="recipes"
     @deleted="removeRecipe" />
     <p v-else>No recipes found</p>
-    <div>
+    <div v-if="isAdmin">
       <router-link to="/recipe/create">
         <button>Create New Recipe</button>
       </router-link>

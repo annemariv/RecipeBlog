@@ -27,6 +27,11 @@ import RecipeCard from "@/components/RecipeCard.vue";
 
 
 export default {
+  computed: {
+  isAdmin() {
+    return localStorage.getItem("isAdmin") === "true";
+  }
+},
   name: "RecipeView",
 
   components: {
@@ -72,10 +77,18 @@ export default {
 </script>
 
 <template>
-  <main class="container mt-5 pt-3">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h1 class="m-0">Recipes</h1>
-      
+  <main>
+    <h1>Recipes</h1>
+
+    <p v-if="loading">Loading...</p>
+    <p v-if="error">Error loading recipes</p>
+
+    <RecipeTable 
+    v-if="recipes.length"
+    :items="recipes"
+    @deleted="removeRecipe" />
+    <p v-else>No recipes found</p>
+    <div v-if="isAdmin">
       <router-link to="/recipe/create">
         <button class="btn btn-success">Create New Recipe</button>
       </router-link>

@@ -170,29 +170,47 @@ paths:
             operationId: ChallengeID
             summary: Get full detail of a challenge
             description: Will return all details of a given challenge based on ChallengeID given
-        delete:
+        put:
             tags:
                 - challenges
+            parameters:
+                -
+                    name: body
+                    description: Contains new data to be changed in the specified Challenge
+                    schema:
+                        $ref: '#/definitions/New-Challenge'
+                    in: body
+                    required: true
             responses:
-                '204':
-                    description: |
-                        Returns "No Content" when removal of challenges is successful
+                '201':
+                    description: Returns 201 upon successful modification of a challenge
+                    schema:
+                        $ref: '#/definitions/New-Challenge'
+                    examples:
+                        application/json:
+                            -
+                                ChallengeID: p
+                                Title: b1ujs
+                                Descrpition: ''
+                                Is_Active: '1'
+                                createdAt: '2018-02-10T09:30Z'
+                                updatedAt: '2018-02-10T09:30Z'
+                '400':
+                    description: Returns 400 when one or multile required parameters are missing
                     schema:
                         $ref: '#/definitions/Error'
                     examples:
                         application/json:
                             -
-                                error: No countent
+                                error: 'cannot change info, because some parameters are missing'
                 '404':
-                    description: 'Returns error, when challenge with specifiede ID does not exist'
+                    description: Returns 404 when Challenge to be modified is not found by the given ChallengeID
                     schema:
                         $ref: '#/definitions/Error'
                     examples:
                         application/json:
                             -
-                                error: Not found
-            summary: Delete a challenge from the app
-            description: Deletes an entry from the app
+                                error: Challenge not found
         delete:
             tags:
                 - challenges
@@ -329,7 +347,7 @@ paths:
                     schema:
                         $ref: '#/definitions/Error'
             operationId: UserID
-            summary: Get full detail of a user
+            summary: Get full detail of a existing user
             description: Will return all details of a given user based on UserID given.
         put:
             tags:
@@ -421,7 +439,18 @@ paths:
                 required: true
                 type: string
     /savedrecipes:
+        get:
+            tags:
+                - saved-recipes
+            responses:
+                '200':
+                    schema:
+                        type: array
+                        items:
+                            type: string
         post:
+            tags:
+                - saved-recipes
             parameters:
                 -
                     name: body
@@ -433,6 +462,177 @@ paths:
                 '201':
                     schema:
                         $ref: '#/definitions/New-SavedRecipe'
+    '/savedrecipes/{UserID}':
+        get:
+            tags:
+                - saved-recipes
+            responses:
+                '200':
+                    schema:
+                        type: array
+                        items:
+                            type: string
+        post:
+            tags:
+                - saved-recipes
+            parameters:
+                -
+                    name: body
+                    schema:
+                        $ref: '#/definitions/New-SavedRecipe'
+                    in: body
+                    required: true
+            responses:
+                '201':
+                    schema:
+                        $ref: '#/definitions/New-SavedRecipe'
+        parameters:
+            -
+                name: UserID
+                description: id of user
+                in: path
+                required: true
+                type: string
+    '/auth/{LoginEmail}':
+        get:
+            tags:
+                - auth
+            parameters:
+                -
+                    name: LoginEmail
+                    description: Email which user can log in
+                    in: path
+                    required: true
+                    type: string
+            responses:
+                '200':
+                    description: Email found
+                    schema:
+                        type: array
+                        items:
+                            type: string
+                '400':
+                    description: Something is missing
+                    schema:
+                        $ref: '#/definitions/Error'
+                '404':
+                    description: Email not found
+                    schema:
+                        $ref: '#/definitions/Error'
+            operationId: LoginEmail
+            summary: Returns 200 when user with email address is found
+            description: Returns 200 when user with email address is found
+        parameters:
+            -
+                name: LoginEmail
+                description: Email which user can log in
+                in: path
+                required: true
+                type: string
+    /sessions:
+        post:
+            tags:
+                - auth
+            parameters:
+                -
+                    name: body
+                    description: Data of the user
+                    schema:
+                        $ref: '#/definitions/Login-User'
+                    in: body
+                    required: true
+            responses:
+                '200':
+                    description: returns selected user data for site functioning
+                    schema:
+                        $ref: '#/definitions/LoggedIn-User'
+                    examples:
+                        application/json:
+                            UserID: 1
+                            DisplayName: Alice
+                            EmailAddress: alice@example.com
+                            IsAdmin: false
+                            message: Login successful
+                '400':
+                    description: Returns bad request when parameters are missing
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json:
+                            error: Missing parameter
+                '401':
+                    description: Returns access denied when incorrect data
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json:
+                            error: Data incorrect
+                '404':
+                    description: Returns not found when user is not found
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json:
+                            error: Not found
+                '500':
+                    description: Returns server error
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json: "\t{\"error\":\"Server error\"}"
+            summary: make session get cookie
+            description: Inserts a session object into db and gives the user a cookie
+    /sessions/me:
+        get:
+            tags:
+                - auth
+                - users
+            responses:
+                '200':
+                    description: Responds when refresh of login is successful
+                    schema:
+                        $ref: '#/definitions/LoggedIn-User'
+                    examples:
+                        application/json:
+                            -
+                                UserID: 6
+                                DisplayName: z
+                                EmailAddress: b3
+                                IsAdmin: true
+                                message: qn
+                '401':
+                    description: 'Returns 401, when reauthentication of User unsuccesful'
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json:
+                            -
+                                error: 'Session expired, please log in again.'
+            summary: Endpoints to refresh login
+    /auth/logout/:
+        delete:
+            tags:
+                - Users
+                - Auth
+            responses:
+                '200':
+                    description: ' Responds 200 OK when removal of session and logout of user is successful'
+                    schema:
+                        type: array
+                        items:
+                            type: string
+                '401':
+                    description: 'Respond 401 when user is trying to logout, without being logged in'
+                    schema:
+                        $ref: '#/definitions/Error'
+                '500':
+                    description: 'Responds 500, when attempting to delete, but uncaught error occurrs.'
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json:
+                            -
+                                error: 'Server error, please hold'
 definitions:
     Error:
         title: Root Type for Error
@@ -506,4 +706,67 @@ definitions:
             updatedAt: '2025-12-01T16:37:08.000Z'
     New-SavedRecipe:
         description: ''
+        required:
+            - Content
+            - Title
+            - RecipeID
         type: object
+        properties:
+            Content:
+                description: ''
+                type: string
+            Image:
+                description: ''
+                type: string
+            Title:
+                description: ''
+                type: string
+            UserID:
+                description: ''
+                type: string
+            RecipeID:
+                description: ''
+                type: string
+        example: |-
+            [
+                {
+                 "Title": "NewSavedRecipeTitle",
+                "Content": "NewSavedRecipeContent",
+                "Image": "NewSavedRecipeImage"
+            }
+                }
+            ]
+    Login-User:
+        title: Root Type for Login-User
+        description: Data that the user provides upon an attempt to login
+        type: object
+        properties:
+            LoginEmail:
+                type: string
+            LoginPassword:
+                type: string
+        example:
+            LoginEmail: alice@example.com
+            LoginPassword: supersecret
+    LoggedIn-User:
+        title: Root Type for LoggedIn-User
+        description: Data of the user that is returned upon successfull new session or reauthenticating old session
+        type: object
+        properties:
+            UserID:
+                format: int32
+                type: integer
+            DisplayName:
+                type: string
+            EmailAddress:
+                type: string
+            IsAdmin:
+                type: boolean
+            message:
+                type: string
+        example:
+            UserID: 1
+            DisplayName: Alice
+            EmailAddress: alice@example.com
+            IsAdmin: false
+            message: Login successful

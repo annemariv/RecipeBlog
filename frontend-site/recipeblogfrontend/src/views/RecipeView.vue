@@ -78,7 +78,7 @@ export default {
 
 <template>
   <main>
-    <h1>Recipes</h1>
+    <h1 class="PageTitle">Recipes</h1>
 
     <p v-if="loading">Loading...</p>
     <p v-if="error">Error loading recipes</p>
@@ -87,7 +87,6 @@ export default {
     v-if="recipes.length"
     :items="recipes"
     @deleted="removeRecipe" />
-    <p v-else>No recipes found</p>
     <div v-if="isAdmin">
       <router-link to="/recipe/create">
         <button class="btn btn-success">Create New Recipe</button>

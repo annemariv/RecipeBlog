@@ -1,3 +1,20 @@
+<script setup>
+import { useRouter } from "vue-router";
+const router = useRouter();
+
+const logout = () => {
+  localStorage.removeItem("LoggedInUserID");
+  localStorage.removeItem("isAdmin");
+  
+  window.location.reload();
+  router.push("/");
+};
+
+// read login state from localStorage
+const isLoggedIn = () => !!localStorage.getItem("LoggedInUserID");
+
+</script>
+
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow" style="background-color: #7f5539;">
     <div class="container">
@@ -19,6 +36,12 @@
             style="background-color: #b08968; border-radius: 8px;">
             Sign Up
           </router-link>
+          <span v-if="!isLoggedIn()">
+            <router-link class="btn btn-sm ms-lg-3 px-4 py-2 fw-bold text-white shadow-sm"  style="background-color: #b08968; border-radius: 8px;" to="/login">Log In</router-link>
+          </span>
+            <span v-else>
+              <button class="btn btn-sm ms-lg-3 px-4 py-2 fw-bold text-white shadow-sm"  style="background-color: #b08968; border-radius: 8px;" @click="logout">Log Out</button>
+            </span>
         </div>
       </div>
     </div>

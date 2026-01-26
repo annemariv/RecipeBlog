@@ -612,8 +612,7 @@ paths:
     /auth/logout/:
         delete:
             tags:
-                - Users
-                - Auth
+                - auth
             responses:
                 '200':
                     description: ' Responds 200 OK when removal of session and logout of user is successful'

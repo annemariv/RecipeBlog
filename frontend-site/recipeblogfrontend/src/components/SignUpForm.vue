@@ -30,7 +30,7 @@ export default {
 <template>
   <main>
 
-    <h1 class="PageTitle text-center">Sign Up an account</h1>
+    <h1 class=" PageTitle text-center">Sign Up an account</h1>
 
     <form 
       @submit.prevent="signUp" 

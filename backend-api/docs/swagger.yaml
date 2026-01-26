@@ -60,11 +60,12 @@ paths:
                             type: string
                     examples:
                         application/json:
-                            RecipeID: 5fa725fd-cec3-11f0-b43f-901b0eec5991
-                            Title: TestRecipe
-                            Content: For testing
-                            createdAt: '2025-12-01T16:37:08.000Z'
-                            updatedAt: '2025-12-01T16:37:08.000Z'
+                            -
+                                RecipeID: 5fa725fd-cec3-11f0-b43f-901b0eec5991
+                                Title: TestRecipe
+                                Content: For testing
+                                createdAt: '2025-12-01T16:37:08.000Z'
+                                updatedAt: '2025-12-01T16:37:08.000Z'
                 '404':
                     description: Returns error when recipe not found.
                     schema:
@@ -269,7 +270,16 @@ paths:
                     description: Send 201 when User is successfully added to the DB
                     schema:
                         $ref: '#/definitions/New-User'
-                    examples: {}
+                    examples:
+                        application/json:
+                            UserID: 5fa725fd-cec3-11f0-b43f-901b0eec5996
+                            EmailAddress: test@test.com
+                            Password: Pass123
+                            UserName: blogger1
+                            PhoneNumber2FA: '55555555'
+                            IsAdmin: false
+                            createdAt: '2025-12-01T16:37:08.000Z'
+                            updatedAt: '2025-12-01T16:37:08.000Z'
                 '400':
                     description: 'Send 400, when the request body is missing some parameter.'
                     schema:
@@ -444,55 +454,33 @@ paths:
                 - saved-recipes
             responses:
                 '200':
+                    description: Gets all saved recipes which are saved by a specific user
                     schema:
                         type: array
                         items:
                             type: string
+            summary: Saved recipes
         post:
             tags:
                 - saved-recipes
             parameters:
                 -
                     name: body
+                    description: Saved recipe is saved by a specific user and specific recipe ID
                     schema:
                         $ref: '#/definitions/New-SavedRecipe'
                     in: body
                     required: true
             responses:
                 '201':
+                    description: 201 response when the new saved recipe is successfully created (saved)
                     schema:
                         $ref: '#/definitions/New-SavedRecipe'
-    '/savedrecipes/{UserID}':
-        get:
-            tags:
-                - saved-recipes
-            responses:
-                '200':
-                    schema:
-                        type: array
-                        items:
-                            type: string
-        post:
-            tags:
-                - saved-recipes
-            parameters:
-                -
-                    name: body
-                    schema:
-                        $ref: '#/definitions/New-SavedRecipe'
-                    in: body
-                    required: true
-            responses:
-                '201':
-                    schema:
-                        $ref: '#/definitions/New-SavedRecipe'
-        parameters:
-            -
-                name: UserID
-                description: id of user
-                in: path
-                required: true
-                type: string
+                    examples:
+                        application/json:
+                            UserID: ''
+                            RecipeID: 6nm2y
+            summary: Saved recipe
     '/auth/{LoginEmail}':
         get:
             tags:
@@ -512,11 +500,11 @@ paths:
                         items:
                             type: string
                 '400':
-                    description: Something is missing
+                    description: Email is not correctly formatted or some parameters are missing
                     schema:
                         $ref: '#/definitions/Error'
                 '404':
-                    description: Email not found
+                    description: Email is incorrect or not existing
                     schema:
                         $ref: '#/definitions/Error'
             operationId: LoginEmail
@@ -621,10 +609,21 @@ paths:
                         type: array
                         items:
                             type: string
+                    examples:
+                        application/json: |-
+                            [
+                                [
+                                    "response": "user logged out successfully"
+                                ]
+                            ]
                 '401':
                     description: 'Respond 401 when user is trying to logout, without being logged in'
                     schema:
                         $ref: '#/definitions/Error'
+                    examples:
+                        application/json:
+                            -
+                                error: Not logged in
                 '500':
                     description: 'Responds 500, when attempting to delete, but uncaught error occurrs.'
                     schema:
@@ -633,6 +632,7 @@ paths:
                         application/json:
                             -
                                 error: 'Server error, please hold'
+            summary: User session will be deleted when logging out
 definitions:
     Error:
         title: Root Type for Error
@@ -705,37 +705,21 @@ definitions:
             createdAt: '2025-12-01T16:37:08.000Z'
             updatedAt: '2025-12-01T16:37:08.000Z'
     New-SavedRecipe:
-        description: ''
+        description: Saved recipe for a specific user
         required:
-            - Content
-            - Title
             - RecipeID
+            - UserID
         type: object
         properties:
-            Content:
-                description: ''
-                type: string
-            Image:
-                description: ''
-                type: string
-            Title:
-                description: ''
-                type: string
             UserID:
                 description: ''
                 type: string
             RecipeID:
                 description: ''
                 type: string
-        example: |-
-            [
-                {
-                 "Title": "NewSavedRecipeTitle",
-                "Content": "NewSavedRecipeContent",
-                "Image": "NewSavedRecipeImage"
-            }
-                }
-            ]
+        example:
+            UserID: '123'
+            RecipeID: '321'
     Login-User:
         title: Root Type for Login-User
         description: Data that the user provides upon an attempt to login

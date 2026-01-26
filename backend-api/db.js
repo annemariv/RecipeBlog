@@ -33,13 +33,27 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.recipes = require('./models/Recipe.js')(sequelize, DataTypes);
 db.users = require('./models/User.js')(sequelize, DataTypes);
-db.savedRecipes = require('./models/SavedRecipe.js')(sequelize, DataTypes, db.recipes, db.users);
+db.savedRecipes = require('./models/SavedRecipe.js')(sequelize, DataTypes);
 
-db.recipes.belongsToMany(db.users, {through: db.savedRecipes, as: "SavedRecipes"});
-db.users.belongsToMany(db.recipes, {through: db.savedRecipes});
+db.recipes.belongsToMany(db.users, {
+  through: db.savedRecipes,
+  foreignKey: 'RecipeID',     
+  otherKey: 'UserID',         
+  as: 'SavedByUsers',
+  onDelete: 'CASCADE'
+});
+
+db.users.belongsToMany(db.recipes, {
+  through: db.savedRecipes,
+  foreignKey: 'UserID',
+  otherKey: 'RecipeID',
+  as: 'SavedRecipes',
+  onDelete: 'CASCADE'
+});
+
 
 const sync = (async () => {
-    await sequelize.sync({});
+    await sequelize.sync({ });
     await sessionStore.sync();
     console.log('DB sync has been completed')
 })

@@ -1,26 +1,28 @@
 const { db } = require('../db');
 const Utilities = require('./Utilities.js');
-const UUID = require('uuid');
-
 
 exports.create = async (req, res) => {
-    if (!req.body.Title || !req.body.Content) {
-        return res.status(400).send({ error: "Missing title or content" });
+  try {
+    const { UserID, RecipeID } = req.body;
+
+    if (!UserID || !RecipeID) {
+      return res.status(400).send({ error: "User or recipe not found" });
     }
 
-    if (!req.body.UserID || !req.body.RecipeID) {
-        return res.status(400).send({ error: "User or recipe not found" });
+    const existing = await db.savedRecipes.findOne({ where: { UserID, RecipeID } });
+    if (existing) {
+      return res.status(409).send({ error: "Recipe already saved by this user" });
     }
 
-    let newSavedRecipe = {
-        Title: req.body.Title,
-        Content: req.body.Content,
-        UserID: req.body.UserID,
-        RecipeID: req.body.RecipeID
-    }
+    const createdRecipe = await db.savedRecipes.create({ UserID, RecipeID });
 
-    const createdRecipe = await db.savedRecipes.create(newSavedRecipe);
     res
-    .location(`${Utilities.getBaseURL(req)}/savedrecipes/${createdRecipe.SavedRecipeID}`)
-    .sendStatus(201);
-}
+      .location(`${Utilities.getBaseURL(req)}/savedrecipes/${createdRecipe.SavedRecipeID}`)
+      .status(201)
+      .send({ SavedRecipeID: createdRecipe.SavedRecipeID });
+
+  } catch (err) {
+    console.error("Error saving recipe:", err);
+    res.status(500).send({ error: "Internal server error" });
+  }
+};

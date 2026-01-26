@@ -492,6 +492,20 @@ paths:
                         application/json:
                             UserID: ''
                             RecipeID: 6nm2y
+                '400':
+                    description: >-
+                        Action returns status code 400 if any of the required parameters for the saved recipe
+                        is missing.
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json: '{ error: "User or recipe not found" }'
+                '409':
+                    description: 'Action return 409 code when recipe is already saved by this user, gives error message'
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json: '{ error: "Recipe already saved by this user" }'
             summary: Saved recipe
     '/auth/{LoginEmail}':
         get:
@@ -644,6 +658,48 @@ paths:
                             -
                                 error: 'Server error, please hold'
             summary: User session will be deleted when logging out
+    '/savedrecipes/{SavedRecipeID}':
+        delete:
+            tags:
+                - saved-recipes
+            parameters:
+                -
+                    name: SavedRecipeID
+                    in: path
+                    required: true
+                    type: string
+            responses:
+                '204':
+                    description: saved recipe is successfully removed from the list
+                    schema:
+                        $ref: '#/definitions/Delete-SavedRecipe'
+                    examples:
+                        application/json:
+                            -
+                                SavedRecipeID: oq
+                '400':
+                    description: >-
+                        Action returns status code 404, when saved recipe by this Id is not found, it is
+                        required. Response also sends error message.
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json: '{ error: "SavedRecipeID is required" }'
+                '401':
+                    description: >-
+                        Action returns status code 401along with the error message containing "Unauthorized.
+                        Please log in" when not logged in
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json: '{ error: "Unauthorized. Please log in." }'
+            summary: Delete the saved recipes from a list.
+        parameters:
+            -
+                name: SavedRecipeID
+                in: path
+                required: true
+                type: string
 definitions:
     Error:
         title: Root Type for Error
@@ -765,3 +821,14 @@ definitions:
             EmailAddress: alice@example.com
             IsAdmin: false
             message: Login successful
+    Delete-SavedRecipe:
+        description: ' saved recipe is removed from the list'
+        required:
+            - SavedRecipeID
+        type: object
+        properties:
+            SavedRecipeID:
+                description: ''
+                type: string
+        example:
+            SavedRecipeID: '123'

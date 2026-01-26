@@ -49,3 +49,23 @@ exports.getAll = async (req, res) => {
     Image: item.Recipe?.Image
   })));
 };
+
+
+exports.delete = async (req, res) => {
+  const UserID = req.session?.UserID;
+  const { SavedRecipeID } = req.params;
+
+  if (!UserID) return res.status(401).send({ error: "Unauthorized. Please log in." });
+  if (!SavedRecipeID) return res.status(400).send({ error: "SavedRecipeID is required" });
+
+  const savedRecipe = await db.savedRecipes.findOne({
+    where: { SavedRecipeID, UserID }
+  });
+
+  if (!savedRecipe) return res.status(404).send({ error: "Saved recipe not found" });
+
+  await savedRecipe.destroy();
+
+  res.status(200).send({ message: "Recipe removed from saved list" });
+};
+

@@ -17,6 +17,7 @@ export default {
         } catch (err) {
           console.error("Failed to delete recipe", err)
         }
+         window.location.reload();
       }
     }
 };

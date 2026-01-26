@@ -28,14 +28,14 @@ export default {
 </script>
 
 <template>
-  <div class="container-fluid min-vh-100 d-flex flex-column justify-content-center align-items-center">
-    
-    <h1 class="display-5 fw-bold text-dark mb-4">Sign Up an account</h1>
+  <main>
+
+    <h1 class="PageTitle text-center">Sign Up an account</h1>
 
     <form 
       @submit.prevent="signUp" 
-      class="p-4 rounded-4 shadow-lg text-white" 
-      style="background-color: #15172b; width: 100%; max-width: 360px;"
+      class="p-4 rounded-4 shadow-lg text-white item-center mx-auto my-4" 
+      style="background-color: #7f5539; width: 100%; max-width: 360px;"
     >
       
       <div class="mb-3">
@@ -44,7 +44,7 @@ export default {
           v-model="NewUser.EmailAddress" 
           type="email" 
           class="form-control border-0 text-white rounded-3" 
-          style="background-color: #303245;"
+          style="background-color: white;"
           placeholder="Enter your email" 
           required
         />
@@ -56,7 +56,7 @@ export default {
           v-model="NewUser.UserName" 
           type="text" 
           class="form-control border-0 text-white rounded-3" 
-          style="background-color: #303245;"
+          style="background-color: white;"
           placeholder="Enter username" 
           pattern=".{4,}" 
           title="At least 4 characters long" 
@@ -70,7 +70,7 @@ export default {
           v-model="NewUser.Password" 
           type="password" 
           class="form-control border-0 text-white rounded-3" 
-          style="background-color: #303245;"
+          style="background-color: white;"
           placeholder="Enter password" 
           pattern=".{8,}" 
           title="At least 8 characters long" 
@@ -84,7 +84,7 @@ export default {
           v-model="NewUser.PhoneNumber2FA" 
           type="tel" 
           class="form-control border-0 text-white rounded-3" 
-          style="background-color: #303245;"
+          style="background-color: white;"
           placeholder="Optionally add phone number" 
           pattern="^\+?[0-9]{8,15}$" 
           maxlength="16"
@@ -100,5 +100,5 @@ export default {
       </button>
 
     </form>
-  </div>
+  </main>
 </template>

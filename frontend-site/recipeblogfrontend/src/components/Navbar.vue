@@ -32,10 +32,12 @@ const isLoggedIn = () => !!localStorage.getItem("LoggedInUserID");
           <router-link to="/about" class="nav-link px-3 text-white">About</router-link>
           <router-link to="/recipes" class="nav-link px-3 text-white">Recipes</router-link>
           
-          <router-link to="/signup" class="btn btn-sm ms-lg-3 px-4 py-2 fw-bold text-white shadow-sm" 
-            style="background-color: #b08968; border-radius: 8px;">
-            Sign Up
+          <span v-if="!isLoggedIn()">
+             <router-link to="/signup" class="btn btn-sm ms-lg-3 px-4 py-2 fw-bold text-white shadow-sm" 
+              style="background-color: #b08968; border-radius: 8px;">
+              Sign Up
           </router-link>
+          </span>
           <span v-if="!isLoggedIn()">
             <router-link class="btn btn-sm ms-lg-3 px-4 py-2 fw-bold text-white shadow-sm"  style="background-color: #b08968; border-radius: 8px;" to="/login">Log In</router-link>
           </span>

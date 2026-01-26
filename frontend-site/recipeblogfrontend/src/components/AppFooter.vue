@@ -5,7 +5,7 @@
         <div class="col-12 text-start">
           <h3 class="fw-bold mb-0" style="color: #e6ccb2;">Recipe Blog</h3>
           <p class="mb-0" style="color: #b08968; font-size: 0.85rem;">
-            2024 © All Rights Reserved
+            2026 © All Rights Reserved KR & AV
           </p>
         </div>
       </div>

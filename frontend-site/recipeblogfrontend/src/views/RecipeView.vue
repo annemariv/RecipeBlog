@@ -89,7 +89,7 @@ export default {
     @deleted="removeRecipe" />
   <div v-if="isAdmin" class="d-flex justify-content-end mb-3">
     <router-link to="/recipe/create">
-      <button class="btn btn-success">Create New Recipe</button>
+      <button class="btn btn-outline-light px-4 rounded-pill" style="background-color: #606c38;">Add a New Recipe</button>
     </router-link>
   </div>
 

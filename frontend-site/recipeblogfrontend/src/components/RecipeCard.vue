@@ -29,12 +29,9 @@ export default {
       
       <div v-for="item in items" :key="item.RecipeID" class="col">
         <div class="card h-100 shadow-sm border-0" style="background-color: #fefae0;">
-          <img class="card-img-top" src="https://via.placeholder.com/300x180?text=Recipe+Image" alt="Recipe image">
+          <img class="card-img-top" :src="item.Image || 'https://i.pinimg.com/736x/53/e1/b1/53e1b140cfe86a0f7b288ef7f9ba7b16.jpg'" alt="Recipe image">
           
           <div class="card-body d-flex flex-column">
-            <span class="recipe-id text-uppercase fw-bold" style="color: #bc6c25; font-size: 0.75rem;">
-              ID: #{{ item.RecipeID }}
-            </span>
             <h5 class="card-title fw-bold mt-1" style="color: #606c38;">{{ item.Title }}</h5>
             
             <p class="card-text text-muted small flex-grow-1">
@@ -42,15 +39,15 @@ export default {
             </p>
 
             <div class="d-flex flex-wrap gap-2 mt-3 pt-3 border-top">
-              <router-link :to="`/recipes/${item.RecipeID}`" class="btn btn-sm text-white" style="background-color: #606c38;">
+              <router-link :to="`/recipes/${item.RecipeID}`"  class="btn btn-outline-light px-4 rounded-pill" style="background-color: #606c38;">
                 View
               </router-link>
               
-              <router-link :to="`/recipe/edit/${item.RecipeID}`" class="btn btn-sm text-white" style="background-color: #d4a373;">
+              <router-link :to="`/recipe/edit/${item.RecipeID}`" class="btn btn-outline-light px-4 rounded-pill" style="background-color: #d4a373;">
                 Edit
               </router-link>
               
-              <button @click="handleDelete(item.RecipeID)" class="btn btn-sm text-white" style="background-color: #bc6c25;">
+              <button @click="handleDelete(item.RecipeID)"  class="btn btn-outline-light px-4 rounded-pill" style="background-color: #bc6c25;">
                 Delete
               </button>
             </div>

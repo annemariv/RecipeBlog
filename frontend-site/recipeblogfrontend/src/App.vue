@@ -28,5 +28,10 @@ a {
 }
 .PageTitle {
   color: #7f5539;
+  font-weight: bold;
+}
+.navbar-nav .nav-link:hover {
+  color: #b08968 !important; 
+  transition: color 0.2s ease-in-out;
 }
 </style>

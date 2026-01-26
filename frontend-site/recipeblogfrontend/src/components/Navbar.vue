@@ -13,6 +13,7 @@ const logout = () => {
 // read login state from localStorage
 const isLoggedIn = () => !!localStorage.getItem("LoggedInUserID");
 
+
 </script>
 
 <template>

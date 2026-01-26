@@ -26,3 +26,26 @@ exports.create = async (req, res) => {
     res.status(500).send({ error: "Internal server error" });
   }
 };
+
+exports.getAll = async (req, res) => {
+  const UserID = req.session?.UserID;
+
+  if (!UserID) {
+    return res.status(401).send({ error: "Unauthorized. Please log in." });
+  }
+
+  const saved = await db.savedRecipes.findAll({
+    where: { UserID },
+    include: {
+      model: db.recipes,
+      attributes: ['RecipeID', 'Title', 'Image']
+    }
+  });
+
+  res.status(200).send(saved.map(item => ({
+    SavedRecipeID: item.SavedRecipeID,
+    RecipeID: item.RecipeID,
+    Title: item.Recipe?.Title,
+    Image: item.Recipe?.Image
+  })));
+};

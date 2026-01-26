@@ -51,6 +51,8 @@ db.users.belongsToMany(db.recipes, {
   onDelete: 'CASCADE'
 });
 
+db.savedRecipes.belongsTo(db.recipes, { foreignKey: 'RecipeID' });
+db.savedRecipes.belongsTo(db.users, { foreignKey: 'UserID' });
 
 const sync = (async () => {
     await sequelize.sync({ });

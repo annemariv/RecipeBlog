@@ -459,7 +459,19 @@ paths:
                         type: array
                         items:
                             type: string
-            summary: Saved recipes
+                    examples:
+                        application/json:
+                            SavedRecipeID: abc-123
+                            RecipeID: def-456
+                            Title: Chocolate Cake
+                            Image: image.jpg
+                '401':
+                    description: Error Unauthorized when the account doesn't exist
+                    schema:
+                        $ref: '#/definitions/Error'
+                    examples:
+                        application/json: '{ error: "Unauthorized" }'
+            summary: Gets all saved recipes which are saved by a specific user who has logged in
         post:
             tags:
                 - saved-recipes

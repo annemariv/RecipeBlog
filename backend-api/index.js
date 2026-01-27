@@ -17,7 +17,10 @@ const { sync, sessionStore } = require('./db');
 //    res.send(["recipe1", "recipe2", "recipe3"])
 //})
 
-app.use(cors());
+app.use(cors({
+    origin: "http://localhost:8080", 
+    credentials: true
+}));
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use(express.json());
 

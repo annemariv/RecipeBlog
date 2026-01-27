@@ -65,6 +65,12 @@ const routes = [
     props: route => {return{seekID: String(route.params.RecipeID)}}
   },
   {
+    path: "/savedrecipes",
+    name: "savedrecipes",
+    component: () =>
+      import("../views/SavedRecipesView.vue"),
+  },
+  {
     path: "/signup",
     name: "signup",
     component: SignUpForm,

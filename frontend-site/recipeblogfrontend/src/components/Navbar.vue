@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
 
@@ -31,11 +32,10 @@ const isLoggedIn = () => !!localStorage.getItem("LoggedInUserID");
         <div class="navbar-nav ms-auto align-items-center">
           <router-link to="/" class="nav-link px-3 text-white">Home</router-link>
           <router-link to="/about" class="nav-link px-3 text-white">About</router-link>
-          <div  v-if="isLoggedIn()">
+          <div class="navbar-nav ms-auto align-items-center" v-if="isLoggedIn()">
           <router-link to="/recipes" class="nav-link px-3 text-white">Recipes</router-link>
           <router-link to="/savedrecipes" class="nav-link px-3 text-white">Saved Recipes</router-link>
           </div>
-          
           <span v-if="!isLoggedIn()">
              <router-link to="/signup" class="btn btn-sm ms-lg-3 px-4 py-2 fw-bold text-white shadow-sm" 
               style="background-color: #b08968; border-radius: 8px;">

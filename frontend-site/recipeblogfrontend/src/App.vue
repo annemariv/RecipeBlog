@@ -7,7 +7,7 @@ import AppFooter from "./components/AppFooter.vue";
 <template>
   <div class="d-flex flex-column min-vh-100">
     <Navbar />
-    <main class="flex-grow-1 pt-5 mt-4">
+    <main class="flex-grow-1 pt-5 mt-4 pb-5">
       <div class="container mt-3">
         <router-view />
       </div>
@@ -28,6 +28,10 @@ a {
 }
 .PageTitle {
   color: #7f5539;
-  margin-left: 20px;
+  font-weight: bold;
+}
+.navbar-nav .nav-link:hover {
+  color: #b08968 !important; 
+  transition: color 0.2s ease-in-out;
 }
 </style>

@@ -87,11 +87,11 @@ export default {
     v-if="recipes.length"
     :items="recipes"
     @deleted="removeRecipe" />
-    <div v-if="isAdmin">
-      <router-link to="/recipe/create">
-        <button class="btn btn-success">Create New Recipe</button>
-      </router-link>
-    </div>
+  <div v-if="isAdmin" class="d-flex justify-content-end mb-3">
+    <router-link to="/recipe/create">
+      <button class="btn btn-outline-light px-4 rounded-pill" style="background-color: #606c38;">Add a New Recipe</button>
+    </router-link>
+  </div>
 
     <p v-if="loading">Loading...</p>
     <p v-if="error">Error loading recipes</p>
@@ -101,6 +101,6 @@ export default {
       :items="recipes"
       @deleted="removeRecipe" 
     />
-    <p v-else-if="!loading">No recipes found</p>
+    <p class="text-centre" v-else-if="!loading">No recipes found</p>
   </main>
 </template>
